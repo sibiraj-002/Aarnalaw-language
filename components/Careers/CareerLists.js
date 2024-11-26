@@ -78,38 +78,40 @@ function PracticeLists() {
             {data.map((item, index) => (
               <div key={index}>
                 <h2 id={`accordion-flush-heading-${index}`}>
-                  <button
-                    type="button"
-                    className="flex w-full items-center justify-between gap-3 border-b border-gray-200 py-5 text-lg font-medium text-custom-blue dark:border-gray-700 dark:text-gray-400"
-                    data-accordion-target={`#accordion-flush-body-${index}`}
-                    aria-expanded="false"
-                    aria-controls={`accordion-flush-body-${index}`}
-                    onClick={() =>
-                      document
-                        .querySelector(`#accordion-flush-body-${index}`)
-                        .classList.toggle("hidden")
-                    }
-                  >
-                    <span
-                      dangerouslySetInnerHTML={{ __html: item.title.rendered }}
-                    ></span>
-                    <svg
-                      className="size-3 shrink-0"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 10 6"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9 5 5 1 1 5"
-                      />
-                    </svg>
-                  </button>
-                </h2>
+  <button
+    type="button"
+    className="flex w-full items-center justify-between gap-8 border-b border-gray-200 py-5 text-lg font-medium text-custom-blue dark:border-gray-700 dark:text-gray-400"
+    data-accordion-target={`#accordion-flush-body-${index}`}
+    aria-expanded="false"
+    aria-controls={`accordion-flush-body-${index}`}
+    onClick={() =>
+      document
+        .querySelector(`#accordion-flush-body-${index}`)
+        .classList.toggle("hidden")
+    }
+  >
+    <span
+      className="flex-1 text-left"
+      dangerouslySetInnerHTML={{ __html: item.title.rendered }}
+    ></span>
+    <svg
+      className="ml-auto size-3 shrink-0"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 10 6"
+    >
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M9 5 5 1 1 5"
+      />
+    </svg>
+  </button>
+</h2>
+
                 <div
                   id={`accordion-flush-body-${index}`}
                   className="hidden"
