@@ -18,19 +18,13 @@ export default function Page({ params }) {
         const response = await fetch(
           `https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed&slug=${paramUrl}`,
         );
-        // console.log("try started");
         const data = await response.json();
-        // console.log("Insight Post", data);
         if (data && data.length > 0) {
           const post = data[0];
-
-          // Set post details in state
           setTitle(post.title.rendered);
-          //   setDate(new Date(post.date).toLocaleDateString());
           setDate(post.date);
           setContent(post.content.rendered);
 
-          // Fetch the featured image if it exists
           if (post.featured_media) {
             try {
               const mediaResponse = await fetch(
@@ -47,7 +41,6 @@ export default function Page({ params }) {
           console.error("No post data found.");
           setError(true); // Set error state if no post found
         }
-        // console.log("insights Page", data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -78,33 +71,54 @@ export default function Page({ params }) {
     return `${day}\n${month}\n${year}`;
   };
 
+  // If error, show the error page
   if (error) {
     return <ErrorPage />;
   }
 
   return (
     <>
+      <style>
+        {`
+        ul {
+          list-style-type: disc; /* Show dots for unordered lists */
+          margin-left: 30px; /* Indentation for unordered list */
+        }
+
+        ol {
+          list-style-type: decimal; /* Show numbers for ordered lists */
+          margin-left: 30px; /* Indentation for ordered list */
+        }
+
+        li {
+          margin-bottom: 0px; /* Optional: space between list items */
+        }
+        `}
+      </style>
+
       <div className="mx-auto w-11/12">
         <div className="h-[20vh]"></div>
         <h1
-          className=" py-4 text-4xl font-bold tracking-wide text-black"
+          className="py-4 text-4xl font-bold tracking-wide text-black"
           dangerouslySetInnerHTML={{ __html: title }}
         ></h1>
-        <p className="py-4">Published:- {formatDateString(date)}</p>
+        <p className="py-4">Published: {formatDateString(date)}</p>
         <Banner backgroundImage={featureImage} />
       </div>
 
       <div className="py-5">
-        <div className=" mx-auto w-11/12">
-          <p
+        <div className="mx-auto w-11/12">
+          {/* Render the content with HTML tags (like <ul>, <ol>, <li>) */}
+          <div
             dangerouslySetInnerHTML={{ __html: content }}
             className="insight-blog"
           />
         </div>
       </div>
+
       <div className="mx-auto w-11/12">
         <Link
-          className="mt-6  bg-custom-red px-4 py-2 text-white"
+          className="mt-6 bg-custom-red px-4 py-2 text-white"
           href="/insights/"
         >
           Back to Insights
