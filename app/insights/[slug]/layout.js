@@ -1,60 +1,42 @@
 export async function generateMetadata({ params }) {
-  // console.log("Fetching data for slug:", params.slug);
+  // API URL with the slug parameter
+  const apiUrl = `https://docs.aarnalaw.com/wp-json/wp/v2/posts?embed&slug=${params.slug}`;
+  
+  try {
+    // Fetch post data from the API
+    const response = await fetch(apiUrl);
 
-  const response = await fetch(
-    `https://docs.aarnalaw.com/wp-json/wp/v2/posts?embed&slug=${params.slug}`,
-  );
+    // Handle non-200 responses
+    if (!response.ok) {
+      console.error("Failed to fetch post data:", response.statusText);
+      throw new Error("Failed to fetch post data");
+    }
 
-  if (!response.ok) {
-    console.error("Failed to fetch post data:", response.statusText);
+    const postData = await response.json();
+    const post = postData[0]; // Assuming the first item in the response is the desired post
+
+    // If no post is found, fallback to default metadata
+    if (!post) {
+      return getDefaultMetadata(params.slug);
+    }
+
+    // Generate metadata from post data
     return {
-      title: "Insights | Aarna Law",
-      description: "Insights | Aarna Law",
+      title: post.acf?.meta_title
+        ? `${post.acf.meta_title} - Insights | Aarna Law`
+        : "Insights | Aarna Law",
+      description: post.acf?.meta_description || "Insights | Aarna Law",
       metadataBase: new URL("https://www.aarnalaw.com/"),
       openGraph: {
         url: `https://www.aarnalaw.com/insights/${params.slug}`,
-        title: "Insights | Aarna Law",
-        description: "Insights | Aarna Law",
-        images: [
-          {
-            url: "/aarna-law.png",
-            width: 800,
-            height: 600,
-            alt: "Insights | Aarna Law",
-          },
-        ],
-      },
-    };
-  }
-
-  const postData = await response.json();
-
-  // Ensure postData has data
-  const post = postData[0];
-
-  // console.log("Fetched post data:", post);
-
-  return {
-    title: post
-      ? `${post.acf.meta_title} - Insights | Aarna Law`
-      : "Insights | Aarna Law", // Assuming title is in 'rendered'
-    description: post
-      ? post.acf.meta_description // Assuming you want the excerpt for the description
-      : "Insights | Aarna Law",
-    metadataBase: new URL("https://www.aarnalaw.com/insights/"),
-    openGraph: {
-      url: `https://www.aarnalaw.com/insights/${params.slug}`,
-      title: post
-        ? `${post.acf.meta_title} - Insights | Aarna Law`
-        : "Insights | Aarna Law",
-      description: post
-        ? post.acf.meta_description // Assuming you want the excerpt for the description
-        : "Insights | Aarna Law",
-      images:
-        post && post.acf && post.acf.mobile_banner
+        title: post.acf?.meta_title
+          ? `${post.acf.meta_title} - Insights | Aarna Law`
+          : "Insights | Aarna Law",
+        description: post.acf?.meta_description || "Insights | Aarna Law",
+        images: post.acf?.mobile_banner
           ? [
               {
-                url: post.acf.mobile_banner.url, // Adjust to your actual structure
+                url: post.acf.mobile_banner.url,
                 width: 800,
                 height: 600,
                 alt: post.acf.meta_title || "Insights | Aarna Law",
@@ -68,6 +50,33 @@ export async function generateMetadata({ params }) {
                 alt: "Insights | Aarna Law",
               },
             ],
+      },
+    };
+  } catch (error) {
+    // Log the error and fallback to default metadata
+    console.error("Error generating metadata:", error);
+    return getDefaultMetadata(params.slug);
+  }
+}
+
+// Function to return default metadata
+function getDefaultMetadata(slug) {
+  return {
+    title: "Insights | Aarna Law",
+    description: "Insights | Aarna Law",
+    metadataBase: new URL("https://www.aarnalaw.com/"),
+    openGraph: {
+      url: `https://www.aarnalaw.com/insights/${slug}`,
+      title: "Insights | Aarna Law",
+      description: "Insights | Aarna Law",
+      images: [
+        {
+          url: "/aarna-law.png",
+          width: 800,
+          height: 600,
+          alt: "Insights | Aarna Law",
+        },
+      ],
     },
   };
 }

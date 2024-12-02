@@ -79,21 +79,21 @@ export default function Page({ params }) {
   return (
     <>
       <style>
-        {`
-        ul {
-          list-style-type: disc; /* Show dots for unordered lists */
-          margin-left: 30px; /* Indentation for unordered list */
-        }
+      {`
+  .insight-blog ul {
+    list-style-type: disc; /* Show dots for unordered lists */
+    margin-left: 30px; /* Indentation for unordered list */
+  }
 
-        ol {
-          list-style-type: decimal; /* Show numbers for ordered lists */
-          margin-left: 30px; /* Indentation for ordered list */
-        }
+  .insight-blog ol {
+    list-style-type: decimal; /* Show numbers for ordered lists */
+    margin-left: 30px; /* Indentation for ordered list */
+  }
 
-        li {
-          margin-bottom: 0px; /* Optional: space between list items */
-        }
-        `}
+  .insight-blog li {
+    margin-bottom: 0px; /* Optional: space between list items */
+  }
+  `}
       </style>
 
       <div className="mx-auto w-11/12">
@@ -107,14 +107,14 @@ export default function Page({ params }) {
       </div>
 
       <div className="py-5">
-        <div className="mx-auto w-11/12">
-          {/* Render the content with HTML tags (like <ul>, <ol>, <li>) */}
-          <div
-            dangerouslySetInnerHTML={{ __html: content }}
-            className="insight-blog"
-          />
-        </div>
-      </div>
+  <div className="mx-auto w-11/12">
+    {/* Render the content with HTML tags (like <ul>, <ol>, <li>) */}
+    <div
+      dangerouslySetInnerHTML={{ __html: content }}
+      className="insight-blog"
+    />
+  </div>
+</div>
 
       <div className="mx-auto w-11/12">
         <Link

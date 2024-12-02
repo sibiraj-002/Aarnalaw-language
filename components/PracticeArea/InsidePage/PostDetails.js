@@ -43,6 +43,19 @@ function PostDetails({ details, partnersData, slug, titleText }) {
   }, []);
 
   return (
+    <>
+    <style>
+      {
+`
+.inner-content ol {
+    list-style: revert-layer;
+    padding-left: 20px;
+    padding-bottom: 10px;
+}
+.inner-content li {
+    padding-top: 10px;
+}`
+}</style>
     <div className="flex w-full flex-col py-5 lg:flex-row">
       <div className="inner-content w-full px-6 md:w-9/12 md:p-14 ">
         <p dangerouslySetInnerHTML={{ __html: details }} className="md:px-20" />
@@ -110,6 +123,7 @@ function PostDetails({ details, partnersData, slug, titleText }) {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
