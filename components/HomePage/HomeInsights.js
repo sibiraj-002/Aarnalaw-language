@@ -16,7 +16,7 @@ export default function HomeInsights() {
     const fetchInsights = async () => {
       try {
         const response = await fetch(
-          "https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed&categories=13",
+          "https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed&categories=13"
         );
         const posts = await response.json();
 
@@ -24,7 +24,7 @@ export default function HomeInsights() {
 
         const fetchMedia = async (mediaId) => {
           const mediaResponse = await fetch(
-            `https://docs.aarnalaw.com/wp-json/wp/v2/media/${mediaId}`,
+            `https://docs.aarnalaw.com/wp-json/wp/v2/media/${mediaId}`
           );
           const mediaData = await mediaResponse.json();
           return mediaData.source_url;
@@ -42,7 +42,7 @@ export default function HomeInsights() {
                 title: item.title.rendered,
                 desc: item.excerpt.rendered,
               };
-            }),
+            })
         );
 
         setInsightsData(latestInsights);
@@ -111,7 +111,7 @@ export default function HomeInsights() {
 
   return (
     <div className="lg:h-[80vh]">
-      <div className="z-40 flex h-[650px] flex-col bg-white lg:absolute lg:right-0 lg:-mt-20 lg:w-11/12 lg:flex-row ">
+      <div className="z-40 flex h-[650px] flex-col bg-white lg:absolute lg:right-0 lg:-mt-20 lg:w-11/12 lg:flex-row">
         <div className="flex justify-between lg:w-2/12">
           <div className="flex w-full items-center justify-evenly gap-7 lg:flex-col">
             <h2 className="m-0 py-5 text-2xl font-bold text-custom-red md:p-0 md:text-[80px] lg:-rotate-90">
@@ -139,7 +139,7 @@ export default function HomeInsights() {
           ) : (
             <InsightSlider ref={sliderRef} {...settings}>
               {insightsData.map((item, index) => (
-                <div key={index} className="w-full ">
+                <div key={index} className="w-full">
                   <div className="lg:ms-5 lg:p-4">
                     <div className="group relative my-auto h-[450px] w-full flex-col border border-gray-200 bg-white shadow transition-colors duration-300 dark:border-gray-700 dark:bg-gray-800 md:hover:bg-custom-red md:hover:text-white lg:flex lg:h-[620px]">
                       <Image
@@ -148,6 +148,7 @@ export default function HomeInsights() {
                         alt={item.title}
                         width={600}
                         height={500}
+                        loading="lazy"
                       />
                       <div className="flex grow flex-col items-start p-5 text-black transition-colors duration-300 md:group-hover:text-white">
                         <h5
