@@ -43,7 +43,10 @@ export default function Banner() {
               alt={banner.bannerText}
               width={600}
               height={500}
-              loading="lazy"
+              loading="eager" // Makes it load as soon as possible
+              priority // Preloads the image for better performance
+              placeholder="blur" // LQIP for smoother loading experience
+              blurDataURL={banner.mobileBannerUrl} // Placeholder image for blur effect
             />
             {/* Desktop Banner */}
             <Image
@@ -52,7 +55,10 @@ export default function Banner() {
               alt={banner.bannerText}
               width={600}
               height={500}
-              loading="lazy"
+              loading="eager" // Makes it load as soon as possible
+              priority // Preloads the image for better performance
+              placeholder="blur" // LQIP for smoother loading experience
+              blurDataURL={banner.bannerUrl} // Placeholder image for blur effect
             />
 
             <div className="absolute flex h-screen w-full flex-col items-center justify-center p-4 text-center text-white">
