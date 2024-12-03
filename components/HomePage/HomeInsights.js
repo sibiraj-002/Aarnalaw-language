@@ -20,7 +20,7 @@ export default function HomeInsights() {
         );
         const posts = await response.json();
 
-        console.log("data insights", posts);
+    
 
         const fetchMedia = async (mediaId) => {
           const mediaResponse = await fetch(

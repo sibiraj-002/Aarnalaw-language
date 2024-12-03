@@ -19,7 +19,7 @@ export default function Partners() {
         );
         const result = await response.json();
         setData(result);
-        console.log("Practice area data", result);
+        // console.log("Practice area data", result);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
