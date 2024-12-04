@@ -1,9 +1,10 @@
 // app/api/sitemap/route.js
 export default async function sitemap() {
   const mainUrl = "https://www.aarnalaw.com/";
+  const mainUrl2 = "https://www.aarnalaw.com";
   const pages = [
     "about-us",
-    "practice-area",
+    "practice-areas",
     "industries",
     "insights",
     "aarna-news",
@@ -41,26 +42,40 @@ export default async function sitemap() {
     "https://docs.aarnalaw.com/wp-json/wp/v2/publications?_embed&per_page=100",
     "https://docs.aarnalaw.com/wp-json/wp/v2/podcasts?_embed&per_page=100",
   ];
+  
 
   // Fetch data from each API
   for (const api of apis) {
     const response = await fetch(api);
     if (response.ok) {
       const data = await response.json();
+
       console.log(data);
       // Extract URLs from the data and replace domain
+
       data.forEach((item) => {
         if (item.link) {
           // Replace the base URL with the desired URL
-          const modifiedUrl = item.link.replace(
+          let modifiedUrl = item.link.replace(
             "https://docs.aarnalaw.com",
-            mainUrl,
+            mainUrl2
           );
+        
+          // Add '/insights/' prefix for category 13
+          if (api.includes("categories=13")) {
+            const slug = modifiedUrl.split("/").filter(Boolean).pop(); // Extract slug from URL
+            modifiedUrl = `${mainUrl2}/insights/${slug}`;
+          }
+          if (api.includes("categories=9")) {
+            const slug = modifiedUrl.split("/").filter(Boolean).pop(); // Extract slug from URL
+            modifiedUrl = `${mainUrl2}/aarna-news/${slug}`;
+          }
+        
           apiUrls.push({
-            url: modifiedUrl, // Use the modified URL
+            url: modifiedUrl,
             lastModified: new Date(),
-            changeFrequency: "daily", // Change based on your preference
-            priority: 0.6, // Change based on your preference
+            changeFrequency: "daily",
+            priority: 0.6,
           });
         }
       });

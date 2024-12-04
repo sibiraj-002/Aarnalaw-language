@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { homeBanner } from "../../utils/data";
+import { homeBanner } from "../../utils/homebanner-data";
 import { initFlowbite } from "flowbite";
 
 export default function Banner() {
@@ -72,7 +72,7 @@ export default function Banner() {
       </div>
 
       {/* Carousel controls */}
-      <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4">
+      {/* <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4">
         <button
           className="bg-gray-700 text-white p-2 rounded-full"
           onClick={handlePrev}
@@ -85,7 +85,7 @@ export default function Banner() {
         >
           &gt;
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
