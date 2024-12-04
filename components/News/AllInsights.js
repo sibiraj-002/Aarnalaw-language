@@ -116,7 +116,7 @@ function AllInsights({ searchTerm }) {
               key={items.id}
             >
               <a href="#">
-                {items.featured_image_url && (
+                {items.featured_image_url ? (
                   <Image
                     src={items.featured_image_url}
                     alt={items.title.rendered}
@@ -124,6 +124,16 @@ function AllInsights({ searchTerm }) {
                     width={500}
                     height={300}
                   />
+                ) : (
+                  <div className="h-[300px] w-full rounded-t-lg bg-gray-200">
+                    <Image
+                      src="/PracticeArea/Aarna-Law-Banner-img.png" // Path to your default image
+                      alt="Default Image"
+                      className="h-full w-full object-cover"
+                      width={500}
+                      height={300}
+                    />
+                  </div>
                 )}
               </a>
               <div className="p-5">
