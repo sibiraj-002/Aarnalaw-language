@@ -19,6 +19,21 @@ const nextConfig = {
 
   async redirects() {
     return [
+      //Practice area
+      {
+        source: "/practice-area",
+        destination:
+          "/practice-areas",
+        permanent: true,
+      },
+       //Practice area
+       {
+        source: "/contact",
+        destination:
+          "/contact-us",
+        permanent: true,
+      },
+
       // Insights
       {
         source: "/copyright-in-fashion-safeguarding-designers-creative-works",
