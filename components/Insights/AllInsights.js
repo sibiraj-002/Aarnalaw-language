@@ -50,15 +50,12 @@ function AllInsights({ searchTerm }) {
             }),
           );
 
-          setData((prevData) => {
-            const newData = dataWithImages.filter(
-              (newPost) =>
-                !prevData.some(
-                  (existingPost) => existingPost.id === newPost.id,
-                ),
-            );
-            return [...prevData, ...newData];
-          });
+          // Only replace data when switching archives or refreshing
+          if (page === 1) {
+            setData(dataWithImages);
+          } else {
+            setData((prevData) => [...prevData, ...dataWithImages]);
+          }
         } else {
           console.error("Expected an array but got:", result);
         }
@@ -70,7 +67,6 @@ function AllInsights({ searchTerm }) {
     };
 
     fetchData();
-    initFlowbite(); // Initialize Flowbite after the data is loaded
   }, [page, selectedArchive]);
 
   useEffect(() => {
@@ -158,7 +154,7 @@ function AllInsights({ searchTerm }) {
               </a>
               <div className="p-5">
                 <h5
-                  className="mb-2 min-h-10 text-lg font-bold tracking-tight text-gray-900 dark:text-white md:text-xl line-clamp-2"
+                  className="mb-2 line-clamp-2 min-h-10 text-lg font-bold tracking-tight text-gray-900 dark:text-white md:text-xl"
                   dangerouslySetInnerHTML={{ __html: items.title.rendered }}
                 ></h5>
 
@@ -216,12 +212,12 @@ function AllInsights({ searchTerm }) {
             .map((archive) => (
               <button
                 onClick={() => {
-                  setData([]);
                   setSelectedArchive(archive);
                   setPage(1);
+                  setHasMore(true); // Reset the hasMore flag to allow loading posts for the selected archive
                 }}
                 className={`flex w-full border-b border-custom-red p-1 ${
-                  selectedArchive === archive
+                  selectedArchive?.id === archive.id
                     ? "font-bold text-custom-red"
                     : "hover:text-custom-red"
                 }`}

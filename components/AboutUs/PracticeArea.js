@@ -51,7 +51,7 @@ export default function PracticeArea() {
               key={index}
               className=" bg-white lg:p-1 p-4 text-black hover:text-custom-red"
             >
-              <Link href={`/practice-area/${item.slug}`}>
+              <Link href={`/practice-areas/${item.slug}`}>
                 <p
                   dangerouslySetInnerHTML={{ __html: item.title.rendered }} className="font-semibold lg:font-normal"
                 ></p>
