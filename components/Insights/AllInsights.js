@@ -11,10 +11,11 @@ function AllInsights({ searchTerm }) {
   const [hasMore, setHasMore] = useState(true);
   const [archives, setArchives] = useState([]);
   const [selectedArchive, setSelectedArchive] = useState(null);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      setLoading(page === 1); // Show main loader only for the first page
       try {
         let url = `https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed&per_page=6&page=${page}&categories=13`;
         if (selectedArchive) {
@@ -50,7 +51,6 @@ function AllInsights({ searchTerm }) {
             }),
           );
 
-          // Only replace data when switching archives or refreshing
           if (page === 1) {
             setData(dataWithImages);
           } else {
@@ -63,6 +63,7 @@ function AllInsights({ searchTerm }) {
         console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
+        setIsLoadingMore(false); // Reset "Load More" loading state
       }
     };
 
@@ -122,10 +123,16 @@ function AllInsights({ searchTerm }) {
     </div>
   );
 
-  const loadMorePosts = () => setPage((prevPage) => prevPage + 1);
+  const loadMorePosts = () => {
+    setIsLoadingMore(true); // Start "Load More" loading state
+    setPage((prevPage) => prevPage + 1);
+  };
 
-  const filteredInsights = data.filter((data) =>
-    data.title.rendered.toLowerCase().includes(searchTerm.toLowerCase()),
+  const filteredInsights = data.filter(
+    (data) =>
+      data.title.rendered.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      data.excerpt.rendered.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      data.content.rendered.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -142,7 +149,7 @@ function AllInsights({ searchTerm }) {
               key={items.id}
             >
               <a href="#">
-                {items.featured_image_url && (
+              {items.featured_image_url ? (
                   <Image
                     src={items.featured_image_url}
                     alt={items.title.rendered}
@@ -150,6 +157,16 @@ function AllInsights({ searchTerm }) {
                     width={500}
                     height={300}
                   />
+                ) : (
+                  <div className="h-[200px] w-full rounded-t-lg object-cover md:h-[300px]">
+                    <Image
+                      src="/PracticeArea/Aarna-Law-Banner-img.png" // Path to your default image
+                      alt="Default Image"
+                      className="h-full w-full object-cover"
+                      width={400}
+                      height={300}
+                    />
+                  </div>
                 )}
               </a>
               <div className="p-5">
@@ -182,22 +199,15 @@ function AllInsights({ searchTerm }) {
           </div>
         )}
 
-        {!loading && hasMore && (
-          <div
-            className={`col-span-1 mt-6 justify-center md:col-span-2 ${filteredInsights.length === 0 ? "hidden" : "flex"}`}
-          >
+        {!loading && hasMore && filteredInsights.length > 0 && (
+          <div className="col-span-1 mt-6 flex justify-center md:col-span-2">
             <button
               onClick={loadMorePosts}
               className="bg-custom-red px-4 py-2 text-white"
+              disabled={isLoadingMore}
             >
-              Load More
+              {isLoadingMore ? "Loading..." : "Load More"}
             </button>
-          </div>
-        )}
-
-        {!hasMore && (
-          <div className="col-span-1 mt-4 text-center text-gray-500 md:col-span-2">
-            No more details available
           </div>
         )}
       </div>
