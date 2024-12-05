@@ -4,7 +4,7 @@ export default function Banner({ title }) {
   const getTitle = () => {
     switch (title) {
       case "insight":
-        return "Insight";
+        return "Insights";
       case "aarna-news":
         return "Aarna News";
       case "publication":
