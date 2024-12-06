@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const Disclaimer = () => {
+const TermsOfUse = () => {
   const [page, setPage] = useState(null); // State to store page data
   const [error, setError] = useState(null); // State to handle errors
 
@@ -8,7 +8,7 @@ const Disclaimer = () => {
     const fetchPage = async () => {
       try {
         const response = await fetch(
-          "https://docs.aarnalaw.com/wp-json/wp/v2/pages/1505"
+          "https://docs.aarnalaw.com/wp-json/wp/v2/pages/1500"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -43,8 +43,8 @@ const Disclaimer = () => {
         `}
       </style>
       {/* Center the entire content */}
-      <div className="flex items-center justify-center pt-16">
-        <div className="w-11/12">
+      <div className="flex items-center justify-center pt-16 ">
+        <div className="md:w-11/12 w-full overflow-hidden p-4">
           {page ? (
             <div
               dangerouslySetInnerHTML={{ __html: page.content.rendered }}
@@ -58,4 +58,4 @@ const Disclaimer = () => {
   );
 };
 
-export default Disclaimer;
+export default TermsOfUse;
