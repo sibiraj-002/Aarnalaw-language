@@ -1,5 +1,12 @@
 export const HeaderMenu = [
-  { menu: "About Us", slug: "/about-us" },
+  {
+    menu: "About",
+    slug: "/about-us",
+    aboutSubMenu: [
+      { name: "The Firm", slug: "/about-us" },
+      { name: "Testimonials", slug: "/testimonials" },
+    ],
+  },
   { menu: "Practice Areas", slug: "/practice-areas" },
   { menu: "Industries", slug: "/industries" },
   {
@@ -13,7 +20,6 @@ export const HeaderMenu = [
   },
   { menu: "Careers", slug: "/careers" },
 ];
-
 
 // Home/Images/
 export const testimonials = [
@@ -255,8 +261,7 @@ export const contactAddress = [
     location: "NEW DELHI",
     // address: "Ground Floor Taj Ambassador, Sujan Singh Marg New Delhi 110003",
     // phone: "+91 11 4350 5878",
-    direction:
-      "",
+    direction: "",
   },
   {
     location: "MUMBAI",

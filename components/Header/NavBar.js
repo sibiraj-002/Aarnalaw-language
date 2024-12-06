@@ -82,12 +82,12 @@ export default function NavBar() {
             <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse">
               {HeaderMenu.map((item, index) => (
                 <li key={index} className="relative">
-                  {item.subMenu ? (
+                  {item.aboutSubMenu || item.subMenu ? (
                     <>
                       <button
                         onClick={() =>
                           setActiveDropdown((prev) =>
-                            prev === index ? null : index
+                            prev === index ? null : index,
                           )
                         }
                         className={`flex w-full items-center justify-between rounded px-3 py-2 hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 md:w-auto md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-custom-red ${
@@ -117,38 +117,38 @@ export default function NavBar() {
                       {activeDropdown === index && (
                         <div className="absolute left-0 z-20 mt-2 w-44 divide-y divide-gray-100 rounded-lg bg-white font-normal shadow dark:divide-gray-600 dark:bg-gray-700">
                           <ul className="py-2 text-sm text-gray-700 dark:text-gray-400">
-                            {item.subMenu.map((subItem, subIndex) => (
-                              <li key={subIndex}>
-                                <Link
-                                  href={`/${subItem.name
-                                    .toLowerCase()
-                                    .replace(/\s+/g, "-")}`}
-                                  onClick={handleMenuItemClick}
-                                  className={`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white ${
-                                    pathname ===
-                                    `/${subItem.name
-                                      .toLowerCase()
-                                      .replace(/\s+/g, "-")}`
-                                      ? "bg-gray-100 text-custom-red dark:bg-gray-700"
-                                      : ""
-                                  }`}
-                                >
-                                  {subItem.name}
-                                </Link>
-                              </li>
-                            ))}
+                            {(item.aboutSubMenu || item.subMenu).map(
+                              (subItem, subIndex) => (
+                                <li key={subIndex}>
+                                  <Link
+                                    href={
+                                      subItem.slug ||
+                                      `/${subItem.name.toLowerCase().replace(/\s+/g, "-")}`
+                                    }
+                                    onClick={handleMenuItemClick}
+                                    className={`block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white ${
+                                      pathname ===
+                                      (subItem.slug ||
+                                        `/${subItem.name.toLowerCase().replace(/\s+/g, "-")}`)
+                                        ? "bg-gray-100 text-custom-red dark:bg-gray-700"
+                                        : ""
+                                    }`}
+                                  >
+                                    {subItem.name}
+                                  </Link>
+                                </li>
+                              ),
+                            )}
                           </ul>
                         </div>
                       )}
                     </>
                   ) : (
                     <Link
-                      href={item.slug === "/podcast" ? "/podcasts" : item.slug}
+                      href={item.slug}
                       onClick={handleMenuItemClick}
                       className={`block rounded px-3 py-2 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-custom-red ${
-                        pathname === item.slug ||
-                        (item.menu === "News & Insights" &&
-                          newsPaths.includes(pathname))
+                        pathname === item.slug
                           ? "text-custom-red dark:bg-gray-700"
                           : "text-gray-900"
                       }`}

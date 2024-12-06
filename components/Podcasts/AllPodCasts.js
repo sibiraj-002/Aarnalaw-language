@@ -230,7 +230,7 @@ function AllPodCasts({ searchTerm }) {
                   100 && (
                   <button
                     onClick={() => toggleExcerpt(item.id)}
-                    className="ml-2 text-custom-red"
+                    className="text-custom-red"
                   >
                     {expandedExcerpt[item.id] ? "Read Less" : "Read More"}
                   </button>
