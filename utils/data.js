@@ -154,7 +154,7 @@ export const credentials = [
   {
     imageUrl: "/credentials/asia-pacific-1.jpg",
     title: "Chamber & Partners",
-    desc: "Dispute Resolution: Arbitration-India",
+    desc: "",
   },
 ];
 
