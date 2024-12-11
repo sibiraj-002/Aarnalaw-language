@@ -6,6 +6,8 @@ import { legalLinks } from "../../utils/data";
 import ContactModal from "@/components/ModalContact/page";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
+const currentYear = new Date().getFullYear();
+
 export default function Footer() {
   return (
     <div className="pt-12">
@@ -65,7 +67,7 @@ export default function Footer() {
           ))}
         </div>
         <p className="mt-2 text-white">
-          © 2024 Aarna Law. All Rights Reserved
+          © {currentYear} Aarna Law. All Rights Reserved
         </p>
       </div>
       <ScrollToTop />
