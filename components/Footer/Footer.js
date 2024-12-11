@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="pt-4">
             <Link href="/">
               <Image
-                src="/logo/ALNewLogo.jpg"
+                src="/logo/al_new_logo.jpg"
                 width={400}
                 height={200}
                 className="h-20 w-28"
