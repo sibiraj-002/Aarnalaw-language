@@ -151,6 +151,11 @@ export const credentials = [
     title: "Legal 500 2020",
     desc: "Aarna Law feature in Legal 500",
   },
+  {
+    imageUrl: "/credentials/asia-pacific-1.jpg",
+    title: "Chamber & Partners",
+    desc: "Dispute Resolution: Arbitration-India",
+  },
 ];
 
 export const legalLinks = [
