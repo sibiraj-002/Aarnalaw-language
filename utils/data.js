@@ -128,12 +128,12 @@ export const testimonials = [
 export const credentials = [
   {
     imageUrl: "/credentials/asia-pacific-1.jpg",
-    title: "Chamber & Partners",
+    title: "Chambers & Partners",
     desc: "",
   },
   {
     imageUrl: "/credentials/1.png",
-    title: "Chamber & Partners",
+    title: "Chambers & Partners",
     desc: "Dispute Resolution: Arbitration-India",
   },
   {
@@ -148,7 +148,7 @@ export const credentials = [
   },
   {
     imageUrl: "/credentials/4.png",
-    title: "Chamber & Partners",
+    title: "Chambers & Partners",
     desc: "Dispute Resolution: Arbitration-India",
   },
   {
