@@ -2,10 +2,10 @@ export const HeaderMenu = [
   {
     menu: "About",
     slug: "/about-us",
-    aboutSubMenu: [
-      { name: "The Firm", slug: "/about-us" },
-      { name: "Testimonials", slug: "/testimonials" },
-    ],
+    // aboutSubMenu: [
+    //   { name: "The Firm", slug: "/about-us" },
+    //   { name: "Testimonials", slug: "/testimonials" },
+    // ],
   },
   { menu: "Practice Areas", slug: "/practice-areas" },
   { menu: "Industries", slug: "/industries" },
@@ -156,7 +156,6 @@ export const credentials = [
     title: "Legal 500 2020",
     desc: "Aarna Law feature in Legal 500",
   },
- 
 ];
 
 export const legalLinks = [
