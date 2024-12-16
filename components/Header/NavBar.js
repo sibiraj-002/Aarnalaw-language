@@ -34,22 +34,18 @@ export default function NavBar() {
 
   return (
     <div className="relative z-50 mx-auto w-11/12">
-      <nav className="absolute z-0 mx-auto mt-10 w-full border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 ">
-        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center md:justify-center justify-end p-2 ">
-          {/* Centered Logo */}
-          <div className="absolute left-20 md:top-10 top-7 z-10 -translate-x-1/2 -translate-y-1/2 transform">
-            <Link href="/" className="flex justify-center">
-              <Image
-                src="/logo/AlNewLogo.jpg"
+      <nav className="absolute z-50 mx-auto mt-10 w-full border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between ">
+          <Link href="/" className="flex items-center">
+          <Image
+                src="/logo/ALNewLogo2.png"
                 alt="Aarna Law Logo"
                 width={120}
                 height={120}
                 className="md:h-28 md:w-28 w-20 h-20"
               />
-            </Link>
-          </div>
-          {/* Toggle menu button */}
-          <div className="flex w-3/12 justify-end lg:hidden">
+          </Link>
+          <div className="flex w-3/6 justify-end lg:hidden">
             <SearchModal />
           </div>
           <button
@@ -166,17 +162,17 @@ export default function NavBar() {
             <div className="flex w-full items-center justify-between pt-4 lg:hidden">
               <Link
                 href="/contact-us"
-                className="mb-2 me-2 border border-custom-red bg-white px-5 py-2.5 text-sm font-medium text-custom-red hover:bg-custom-red hover:text-white "
+                className="mb-2 me-2 border border-custom-red bg-white px-5 py-2.5 text-sm font-medium text-custom-red hover:bg-custom-red hover:text-white"
               >
                 CONTACT US
               </Link>
             </div>
           </div>
-          <div className="hidden w-3/12 items-center justify-evenly lg:flex ">
+          <div className="hidden w-3/12 items-center justify-evenly lg:flex">
             <SearchModal />
             <Link
               href="/contact-us"
-              className="mb-2 me-2 mt-2 border border-custom-red bg-white px-5 py-2.5 text-sm font-medium text-custom-red hover:bg-custom-red hover:text-white "
+              className="mb-2 me-2 mt-2 border border-custom-red bg-white px-5 py-2.5 text-sm font-medium text-custom-red hover:bg-custom-red hover:text-white"
             >
               CONTACT US
             </Link>
