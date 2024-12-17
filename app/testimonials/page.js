@@ -6,11 +6,11 @@ import TestimonialContent from '../../components/Testimonials/TestimonialContent
 const Testimonials = () => {
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>Testimonials - Aarna Law</title>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="description" content="This page is not for public indexing." />
-      </Head>
+      </Head> */}
       <Banner />
       <TestimonialContent />
     </>
