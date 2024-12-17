@@ -44,7 +44,7 @@ function Testimonials() {
               </div>
 
               {/* Bottom Section: Full Width Testimonial */}
-              <div className="p-6 ">
+              <div className="px-6 pb-6">
                 <p className="line-clamp-4 text-gray-700">
                   {items.fullTestimonial.slice(0, 150)}...
                 </p>
