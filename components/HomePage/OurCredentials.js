@@ -9,6 +9,23 @@ import Image from "next/image";
 const Podcasts = () => {
   const sliderRef = useRef(null);
 
+  // State to track screen size
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    // Update screen size state on component mount
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024); // Adjust 1024px for desktop threshold
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -40,8 +57,8 @@ const Podcasts = () => {
           responsive={responsive}
           showDots={false}
           infinite={true}
-          autoPlaySpeed={3000}
-          autoPlay={true} // Control autoplay with state
+          autoPlaySpeed={isDesktop ? 1500 : 3000} // Faster autoplay on desktop
+          autoPlay={true}
           itemClass="p-1"
           keyBoardControl={true}
           removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
