@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { spotify, linkedIn } from "../../utils/icons";
@@ -6,27 +7,42 @@ import { legalLinks } from "../../utils/data";
 import ContactModal from "@/components/ModalContact/page";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
 
-const currentYear = new Date().getFullYear();
-
 export default function Footer() {
+  const [isMobile, setIsMobile] = useState(false);
+  const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    // Function to check if the screen is in mobile view
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // Adjust the width as per your breakpoint
+    };
+
+    // Initial check and event listener for resize
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="pt-12">
-      <div className="bg-custom-blue">
+      <div className="bg-white border-t-2 border-custom-blue">
         <div className="mx-auto grid w-11/12 lg:grid-cols-2">
           <div className="pt-4">
-            <Link href="/">
-              <Image
+          <Link href="/" className="flex items-center">
+          <Image
                 src="/logo/AarnalawLogo.jpg"
-                width={400}
-                height={200}
-                className="h-16 w-32"
-                alt="Logo"
+                alt="Aarna Law Logo"
+                width={600}
+                height={600}
+                className="md:h-20 md:w-44 h-16 w-32"
               />
-            </Link>
-            <div className="flex gap-8 py-4">
+          </Link>
+            <div className="flex gap-8 py-4 md:ps-10 ps-8">
               <Link
                 href="https://www.linkedin.com/company/aarna-law1/"
-                className="flex items-center justify-center gap-2 text-xl text-white"
+                className="flex items-center justify-center gap-2 text-xl text-custom-blue"
                 target="_blank"
               >
                 {linkedIn} LinkedIn
@@ -34,14 +50,14 @@ export default function Footer() {
 
               <Link
                 href="https://open.spotify.com/show/2FYjq2t4nrx3bT9UMwN55h"
-                className="flex items-center justify-center gap-2 text-xl text-white"
+                className="flex items-center justify-center gap-2 text-xl text-custom-blue"
                 target="_blank"
               >
                 {spotify} Spotify
               </Link>
             </div>
           </div>
-          <div className="flex items-center pb-10 lg:justify-end lg:pb-0">
+          <div className="flex items-center pb-10 lg:justify-end lg:pb-0 md:ps-0 ps-8">
             <ContactModal
               btnName="Subscribe to newsletter"
               textColor="text-white"

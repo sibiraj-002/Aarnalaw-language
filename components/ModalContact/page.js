@@ -23,12 +23,10 @@ function ModalContact({ btnName, textColor, modalTitle, btnType, id }) {
 
   return (
     <>
-      <button
-        className={` ${textColor} mt-8 border border-custom-red p-2 text-lg ${
-          textColor === "text-custom-red"
-            ? "hover:bg-custom-red hover:text-white"
-            : "hover:border-white hover:bg-white hover:text-custom-red"
-        }  md:px-6 md:text-base`}
+     <button
+        className={`text-custom-blue border border-custom-red bg-transparent p-2 text-lg 
+          hover:text-white hover:bg-custom-blue 
+          md:px-6 md:text-base`}
         onClick={() => setOpenModal(true)}
       >
         {btnName}
