@@ -23,9 +23,9 @@ function ModalContact({ btnName, textColor, modalTitle, btnType, id }) {
 
   return (
     <>
-     <button
-        className={`text-custom-blue border border-custom-red bg-transparent p-2 text-lg 
-          hover:text-white hover:bg-custom-blue 
+      <button
+        className={`border border-custom-red bg-transparent p-2 text-lg text-custom-blue font-semibold 
+          hover:bg-custom-blue hover:text-white 
           md:px-6 md:text-base`}
         onClick={() => setOpenModal(true)}
       >
