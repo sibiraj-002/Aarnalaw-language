@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
 import Image from "next/image";
 
+
 export default function HomeInsights() {
   const [insightsData, setInsightsData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -110,6 +111,8 @@ export default function HomeInsights() {
   };
 
   return (
+    <>
+    
     <div className="lg:h-[80vh]">
       <div className="z-40 flex h-[650px] flex-col bg-white lg:absolute lg:right-0 lg:-mt-20 lg:w-11/12 lg:flex-row">
         <div className="flex justify-between lg:w-2/12">
@@ -130,9 +133,9 @@ export default function HomeInsights() {
               {[...Array(2)].map((_, index) => (
                 <div key={index} className="w-full p-2">
                   <div className="mb-4 h-[300px] animate-pulse bg-gray-200"></div>
-                  <div className="mb-2 h-12 animate-pulse bg-gray-200"></div>
-                  <div className="h-10 animate-pulse bg-gray-200"></div>
-                  <div className="h-10 animate-pulse bg-gray-200"></div>
+                  <div className="mb-2 h-10 animate-pulse bg-gray-200"></div>
+                  <div className="h-14 animate-pulse bg-gray-200"></div>
+                  <div className="h-14 animate-pulse bg-gray-200"></div>
                 </div>
               ))}
             </div>
@@ -174,6 +177,15 @@ export default function HomeInsights() {
               ))}
             </InsightSlider>
           )}
+           {/* View All Button */}
+           <div className="mt-6 flex justify-center md:me-[31%] ms-3">
+            <Link
+              href="/insights"
+              className="border border-custom-blue px-6 py-2 text-custom-blue md:hover:bg-custom-blue md:hover:text-white"
+            >
+              View all
+            </Link>
+          </div>
         </div>
         {/* Mobile view navigation arrows and View All button */}
         <div className="flex items-center justify-center gap-4 pt-8 lg:hidden">
@@ -181,15 +193,7 @@ export default function HomeInsights() {
           <NextArrow />
         </div>
       </div>
-      {/* Desktop */}
-      <div className="bottom-0 flex items-end justify-center lg:h-[80vh]">
-        <Link
-          href="/insights"
-          className="border border-custom-blue px-6 py-2 text-custom-blue md:hover:bg-custom-blue md:hover:text-white"
-        >
-          View all
-        </Link>
-      </div>
     </div>
+    </>
   );
 }
