@@ -35,7 +35,7 @@ export default function NavBar() {
   return (
     <div className="relative z-50 mx-auto w-11/12">
       <nav className="absolute z-50 mx-auto mt-10 w-full border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between ">
+        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between pe-2">
           <Link href="/" className="flex items-center">
           <Image
                 src="/logo/AarnalawLogo.jpg"
@@ -45,7 +45,7 @@ export default function NavBar() {
                 className="md:h-20 md:w-44 h-16 w-32"
               />
           </Link>
-          <div className="flex w-3/6 justify-end lg:hidden">
+          <div className="flex w-[40%] justify-end lg:hidden">
             <SearchModal />
           </div>
           <button
@@ -159,7 +159,7 @@ export default function NavBar() {
                 </li>
               ))}
             </ul>
-            <div className="flex w-full items-center justify-between pt-4 lg:hidden">
+            <div className="flex w-full items-center justify-start px-7 pt-4 lg:hidden">
               <Link
                 href="/contact-us"
                 className="mb-2 me-2 border border-custom-red bg-white px-5 py-2.5 text-sm font-medium text-custom-red hover:bg-custom-red hover:text-white"
