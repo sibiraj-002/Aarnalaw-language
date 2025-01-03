@@ -35,14 +35,14 @@ export default function NavBar() {
   return (
     <div className="relative z-50 mx-auto w-11/12">
       <nav className="absolute z-50 mx-auto mt-10 w-full border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
-        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between pe-2">
+        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between pe-2 md:ps-10 ps-5">
           <Link href="/" className="flex items-center">
           <Image
                 src="/logo/NewAarnalawLogo.jpg"
                 alt="Aarna Law Logo"
                 width={600}
                 height={600}
-                className="h-24 w-20"
+                className="md:h-24 md:w-24 h-20 w-16"
               />
           </Link>
           <div className="flex w-[40%] justify-end lg:hidden">
