@@ -32,14 +32,15 @@ export default function Footer() {
           <div className="pt-4">
           <Link href="/" className="flex items-center">
           <Image
-                src="/logo/AarnalawLogo.jpg"
+                src="/logo/AarnalawNewLogo.jpg"
                 alt="Aarna Law Logo"
                 width={600}
                 height={600}
-                className="md:h-20 md:w-44 h-16 w-32"
+                className="h-24 w-28"
+              
               />
           </Link>
-            <div className="flex gap-8 py-4 md:ps-10 ps-8">
+            <div className="flex gap-8 py-4 ps-2">
               <Link
                 href="https://www.linkedin.com/company/aarna-law1/"
                 className="flex items-center justify-center gap-2 text-xl text-custom-blue"
@@ -57,7 +58,7 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-          <div className="flex items-center pb-10 lg:justify-end lg:pb-0 md:ps-0 ps-8">
+          <div className="flex items-center pb-10 lg:justify-end lg:pb-0 md:ps-0 ps-2">
             <ContactModal
               btnName="Subscribe to newsletter"
               textColor="text-white"

@@ -38,11 +38,11 @@ export default function NavBar() {
         <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between pe-2">
           <Link href="/" className="flex items-center">
           <Image
-                src="/logo/AarnalawLogo.jpg"
+                src="/logo/AarnalawNewLogo.jpg"
                 alt="Aarna Law Logo"
                 width={600}
                 height={600}
-                className="md:h-20 md:w-44 h-16 w-32"
+                className="h-24 w-28"
               />
           </Link>
           <div className="flex w-[40%] justify-end lg:hidden">
