@@ -36,7 +36,7 @@ export default function Footer() {
                 alt="Aarna Law Logo"
                 width={600}
                 height={600}
-                 className="h-24 w-20"
+                className="md:h-24 md:w-24 h-20 w-16"
               
               />
           </Link>
