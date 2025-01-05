@@ -9,7 +9,6 @@ function AllInsights({ searchTerm }) {
   const [archives, setArchives] = useState([]);
   const [selectedArchive, setSelectedArchive] = useState(null);
   const [visibleItems, setVisibleItems] = useState(6);
-
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
   const loadMore = () => {
@@ -19,7 +18,7 @@ function AllInsights({ searchTerm }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-    }, 500); // 500ms debounce time
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [searchTerm]);
@@ -35,20 +34,23 @@ function AllInsights({ searchTerm }) {
       const result = await response.json();
 
       if (Array.isArray(result)) {
+        const sortedData = result.sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        );
+
         setData(
-          result.map((item) => ({
+          sortedData.map((item) => ({
             ...item,
             featured_image_url: null,
             isImageLoading: true,
-          })),
+          }))
         );
 
-        // Fetch featured images
-        result.forEach(async (item, index) => {
+        sortedData.forEach(async (item, index) => {
           if (item.featured_media) {
             try {
               const mediaResponse = await fetch(
-                `https://docs.aarnalaw.com/wp-json/wp/v2/media/${item.featured_media}`,
+                `https://docs.aarnalaw.com/wp-json/wp/v2/media/${item.featured_media}`
               );
               const mediaResult = await mediaResponse.json();
               setData((prevData) => {
@@ -75,7 +77,7 @@ function AllInsights({ searchTerm }) {
     const fetchArchives = async () => {
       try {
         const response = await fetch(
-          `https://docs.aarnalaw.com/wp-json/wp/v2/archives`,
+          `https://docs.aarnalaw.com/wp-json/wp/v2/archives`
         );
         const archivesData = await response.json();
 
@@ -87,11 +89,13 @@ function AllInsights({ searchTerm }) {
 
         setArchives(sortedArchives);
 
-        const defaultArchive = sortedArchives.find((archive) =>
-          archive.name.includes("2024"),
-        );
-        setSelectedArchive(defaultArchive || sortedArchives[0]);
-        fetchData(defaultArchive?.name || sortedArchives[0].name);
+        // Default to 2025 archive or fallback to the latest archive if 2025 is not available
+        const defaultArchive =
+          sortedArchives.find((archive) => archive.name === "2025") ||
+          sortedArchives[0];
+
+        setSelectedArchive(defaultArchive);
+        fetchData(defaultArchive.name);
       } catch (error) {
         console.error("Error fetching archives:", error);
       }
@@ -119,7 +123,7 @@ function AllInsights({ searchTerm }) {
           .includes(debouncedSearchTerm.toLowerCase()) ||
         item.excerpt.rendered
           .toLowerCase()
-          .includes(debouncedSearchTerm.toLowerCase()),
+          .includes(debouncedSearchTerm.toLowerCase())
     )
     .slice(0, visibleItems);
 
@@ -144,6 +148,7 @@ function AllInsights({ searchTerm }) {
     const year = date.getFullYear();
     return `${day}\n${month}\n${year}`;
   };
+
   const SkeletonLoader = () => (
     <div className="flex animate-pulse border border-gray-200 bg-white p-5 shadow dark:border-gray-700 dark:bg-gray-800">
       <div className="flex h-40 w-full items-center justify-center bg-gray-300"></div>
