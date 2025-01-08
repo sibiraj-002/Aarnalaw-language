@@ -1,11 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { practiceArea } from "../../utils/data";
 
 export default function PracticeArea() {
   const [data, setData] = useState([]); // Initialize data state with an empty array
-  const [loading, setLoading] = useState([]); // Initialize data state with an empty array
+  const [loading, setLoading] = useState(true); // Corrected to true for the initial loading state
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,15 +14,11 @@ export default function PracticeArea() {
         );
         const result = await response.json();
 
-    
-
-        // Ensure the response is an array before setting the data
         if (Array.isArray(result)) {
-          // Sort the data alphabetically by title
           const sortedData = result.sort((a, b) => {
-            const titleA = a.title.rendered.toLowerCase(); // Convert to lowercase for case-insensitive comparison
+            const titleA = a.title.rendered.toLowerCase();
             const titleB = b.title.rendered.toLowerCase();
-            return titleA.localeCompare(titleB); // Compare titles
+            return titleA.localeCompare(titleB);
           });
           setData(sortedData);
         } else {
@@ -32,7 +27,7 @@ export default function PracticeArea() {
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        setLoading(false); // Set loading to false once data is fetched
+        setLoading(false);
       }
     };
 
@@ -49,13 +44,18 @@ export default function PracticeArea() {
           {data.map((item, index) => (
             <div
               key={index}
-              className=" bg-white lg:p-1 p-4 text-black hover:text-custom-red"
+              className="group relative overflow-hidden bg-white p-4 text-black hover:text-white lg:p-1"
             >
               <Link href={`/practice-areas/${item.slug}`}>
                 <p
-                  dangerouslySetInnerHTML={{ __html: item.title.rendered }} className="font-semibold lg:font-normal"
+                  dangerouslySetInnerHTML={{
+                    __html: item.title.rendered,
+                  }}
+                  className="relative z-10 font-semibold lg:font-normal"
                 ></p>
               </Link>
+              {/* Background animation */}
+              <div className="absolute inset-0 z-0 origin-left scale-x-0 transform bg-gradient-to-r from-custom-blue to-transparent transition-transform duration-300 group-hover:scale-x-100"></div>
             </div>
           ))}
         </div>

@@ -178,7 +178,7 @@ export default function HomeInsights() {
         </InsightSlider>
       )}
       {/* View All Button */}
-      <div className="mt-6 flex justify-center md:me-[31%] ms-3">
+      <div className="mt-6 flex justify-center  ms-3">
         <Link
           href="/insights"
           className="border border-custom-blue px-6 py-2 text-custom-blue md:hover:bg-custom-blue md:hover:text-white"

@@ -19,7 +19,7 @@ const WhatWeDo = () => {
             What We Do
           </h1>
           <h2 className="mt-4 py-4 text-4xl font-semibold text-custom-blue md:mt-0">
-            We are an award-winning advisory with an international perspective.
+          We are an award-winning legal litigation boutique with an international perspective. 
           </h2>
           <p className="mt-4 text-custom-gray md:mt-0 ">
             Our counsel-led, tech-enabled practice envisions justice as an

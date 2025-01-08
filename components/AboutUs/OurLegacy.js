@@ -6,7 +6,7 @@ export default function OurLegacy() {
     <>
       <div className="mx-auto  grid w-11/12 py-12 lg:grid-cols-2">
         <div className="order-2 flex flex-col items-start justify-center lg:order-1 lg:p-12">
-          <h1 className="text-2xl font-bold uppercase text-custom-blue mt-4 lg:mt-0">
+          <h1 className="mt-4 text-2xl font-bold uppercase text-custom-blue lg:mt-0">
             Our Legacy
           </h1>
           <h2 className="mt-4 py-4 text-2xl font-semibold text-custom-red md:mt-0 lg:text-4xl">
@@ -17,9 +17,9 @@ export default function OurLegacy() {
 
           <p className="mt-4 py-2 text-custom-gray md:mt-0">
             Above all, our award-winning practice is founded on the enduring
-            relationships we cultivate with every client. And, the legal and
+            relationships we cultivate with every client. The legal and
             commercial advice we provide reflects this conscious understanding
-            of our clients’ best interests.
+            of our client&apos;s business interests.
           </p>
         </div>
         <div className="order-1 lg:order-2">
@@ -32,7 +32,7 @@ export default function OurLegacy() {
           />
         </div>
       </div>
-      <div className="mx-auto grid w-11/12 py-12 lg:grid-cols-2">
+      {/* <div className="mx-auto grid w-11/12 py-12 lg:grid-cols-2">
         <div className="">
           <Image
             src="/aboutUs/Whatwedo.png"
@@ -59,7 +59,7 @@ export default function OurLegacy() {
             law, we advise with uncompromising integrity.
           </p>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
