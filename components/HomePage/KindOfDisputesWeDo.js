@@ -61,7 +61,7 @@ const KindOfDisputes = () => {
   return (
     <div className="py-8 px-4 md:mx-10">
       <h2 className="text-center text-2xl font-semibold text-custom-red mb-6">
-        Kind Of Disputes We Do
+      Disputes We Resolve
       </h2>
       <Carousel 
         responsive={responsive} 
