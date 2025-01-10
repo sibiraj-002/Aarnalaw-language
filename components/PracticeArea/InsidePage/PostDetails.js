@@ -73,7 +73,7 @@ function PostDetails({ details, partnersData, slug, titleText }) {
         {partnersData?.partnerNames?.map((name, index) => (
           <div
             key={index}
-            className="flex flex-col items-center justify-start pt-10 text-center md:px-14 md:pt-14"
+            className="flex flex-col items-center justify-start pt-10 text-center md:px-14 md:pt-14 mb-5"
           >
             {partnersData.partnerImages?.[index] && (
               <Image
