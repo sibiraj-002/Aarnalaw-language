@@ -49,7 +49,7 @@ const Podcasts = () => {
     <div className="bg-[#EFEFEF] py-12">
       <div className="mx-auto w-11/12 ">
         <h1 className="mb-10 text-center text-2xl font-semibold text-custom-red">
-          Our Credentials
+        Awards & Accolades
         </h1>
 
         <Credentials
