@@ -127,7 +127,7 @@ export const testimonials = [
 
 export const credentials = [
   {
-    imageUrl: "/credentials/our-credentials-5.jpg",
+    imageUrl: "/credentials/our-credentials-img-5.jpg",
     title: "Chambers & Partners",
     desc: "Dispute Resolution: Arbitration award",
   },
