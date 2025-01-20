@@ -127,37 +127,38 @@ export const testimonials = [
 
 export const credentials = [
   {
-    imageUrl: "/credentials/our-credentials-img-5.jpg",
+    imageUrl: "/credentials/our-credentials-img-5.jpg", //Chambers & Partners 2025
     title: "Chambers & Partners",
     desc: "Dispute Resolution: Arbitration award",
   },
   {
-    imageUrl: "/credentials/asia-pacific-1.jpg",
+    imageUrl: "/credentials/asia-pacific-1.jpg", //Chambers & Partners 2024
     title: "Chambers & Partners",
     desc: "",
   },
   {
-    imageUrl: "/credentials/1.png",
+    imageUrl: "/credentials/4.png", //Chambers & Partners 2023
     title: "Chambers & Partners",
     desc: "Dispute Resolution: Arbitration-India",
   },
   {
-    imageUrl: "/credentials/2.png",
+    imageUrl: "/credentials/1.png", //Chambers & Partners 2022
+    title: "Chambers & Partners",
+    desc: "Dispute Resolution: Arbitration-India",
+  },
+  {
+    imageUrl: "/credentials/2.png", //WWL
     title: "Who’s Who Legal 2023",
     desc: "Thought Leaders- India, Asset Recovery and Arbitration",
   },
   {
-    imageUrl: "/credentials/3.png",
+    imageUrl: "/credentials/3.png", //Icc
     title: "ICC Fraudnet",
     desc: "",
   },
+
   {
-    imageUrl: "/credentials/4.png",
-    title: "Chambers & Partners",
-    desc: "Dispute Resolution: Arbitration-India",
-  },
-  {
-    imageUrl: "/credentials/5.png",
+    imageUrl: "/credentials/5.png", //Legal 500
     title: "Legal 500 2020",
     desc: "Aarna Law feature in Legal 500",
   },
