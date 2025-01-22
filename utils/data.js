@@ -277,9 +277,9 @@ export const contactAddress = [
   {
     location: "MUMBAI",
     address:
-      "Unit 304, Awfis Space Solutions Limited, Adani Inspire, Bandra Kurla Complex Rd,G Block, BKC, Bharat Nagar, Bandra East,Mumbai, Maharashtra 400051",
-    phone: "+022 4077 9109",
+      "Aarna Law, 2nd Floor - 225, Trade Centre, BKC, Bandra East, Mumbai - 400051",
+    // phone: "+022 4077 9109",
     direction:
-      "https://www.google.com/maps/place/18%C2%B056'09.2%22N+72%C2%B049'54.3%22E/@18.9358889,72.83175,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0x650123a4e0b7f8c1!8m2!3d18.9358771!4d72.8317381?hl=en",
+      "https://www.google.com/maps/place/AARNA+LAW+LLP/@19.071377,72.8683523,17z/data=!4m10!1m2!2m1!1sAarna+Law,+2nd+Floor+%E2%80%93+225,+Trade+Centre,+BKC,+Bandra+East,+Mumbai+-+400051!3m6!1s0x3be7c978c0a74db7:0xa396de467594668f!8m2!3d19.068488!4d72.8702805!15sCk1BYXJuYSBMYXcsIDJuZCBGbG9vciDigJMgMjI1LCBUcmFkZSBDZW50cmUsIEJLQywgQmFuZHJhIEVhc3QsIE11bWJhaSAtIDQwMDA1MZIBDmxlZ2FsX3NlcnZpY2Vz4AEA!16s%2Fg%2F11wmz9s7z0?hl=en&entry=ttu&g_ep=EgoyMDI1MDExNS4wIKXMDSoASAFQAw%3D%3D",
   },
 ];
