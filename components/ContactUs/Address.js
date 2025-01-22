@@ -19,30 +19,31 @@ function Address() {
 
               {/* Render location and address only if address is present */}
               {items.address && (
-                <div className="flex">
-                  <div className="mt-2">{location}</div>
-                  <p className="flex gap-2 py-2">{items.address}</p>
+                <div className="flex items-start gap-2 py-2">
+                  <div className="mt-1">{location}</div>
+                  <p>{items.address}</p>
                 </div>
               )}
 
-              {/* Ensure phone field has a minimum height */}
-              <p className="flex items-center gap-2 py-2 ">
-                {items.phone ? (
-                  <>
-                    {phone}
+              {/* Render phone only if it's present */}
+              {items.phone && (
+                <p className="flex items-center gap-2 py-2 text-black ms-2">
+                  {phone}
+                  <a
+                    href={`tel:${items.phone.replace(/\s+/g, "")}`}
+                    className="hover:underline text-black"
+                  >
                     {items.phone}
-                  </>
-                ) : (
-                  <span className="block w-full"></span> // Empty block for spacing
-                )}
-              </p>
+                  </a>
+                </p>
+              )}
 
               {/* Render direction link only if it's present */}
-              {items.direction && (
-                <div>
+              {items.direction && items.direction.trim() && (
+                <div className="ms-2">
                   <Link
                     href={items.direction}
-                    className="text-custom-red"
+                    className="text-custom-red hover:underline"
                     target="_blank"
                   >
                     Get direction
@@ -56,8 +57,6 @@ function Address() {
     </>
   );
 }
-
-
 
 export default Address;
 
