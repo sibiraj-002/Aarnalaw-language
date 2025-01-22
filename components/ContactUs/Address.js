@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { contactAddress } from "@/utils/data";
-import { location, phone } from "@/utils/icons";
+import { location, phone, direction } from "@/utils/icons";
 
 function Address() {
   return (
@@ -40,7 +40,8 @@ function Address() {
 
               {/* Render direction link only if it's present */}
               {items.direction && items.direction.trim() && (
-                <div className="ms-2">
+                <div className="flex items-center gap-2 py-2 ms-2">
+                  {direction}
                   <Link
                     href={items.direction}
                     className="text-custom-red hover:underline"

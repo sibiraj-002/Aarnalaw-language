@@ -11,6 +11,7 @@ import { HiMiniSpeakerXMark } from "react-icons/hi2";
 import { MdSkipNext } from "react-icons/md";
 import { MdSkipPrevious } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
+import { FaDirections } from "react-icons/fa";
 
 export const leftArrow = <FaArrowLeft />;
 export const rightArrow = <FaArrowRight />;
@@ -25,3 +26,4 @@ export const spotify = <FaSpotify size={25} color="#1E396A" />;
 export const location = <CiLocationOn size={30} />;
 export const phone = <FaPhoneAlt size={17} />;
 export const search = <CiSearch />;
+export const direction = <FaDirections color="#EE3E23" />;
