@@ -39,7 +39,7 @@ const PublicationPopupForm = ({ onSubmit, onClose, item }) => {
   };
 
   return (
-    <div className="w-96 rounded-lg bg-white p-6">
+    <div className="w-1/4 rounded-lg bg-white p-6">
       <h2 className="mb-4 text-xl font-semibold">Enter Your Details</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
