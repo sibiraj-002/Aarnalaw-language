@@ -2,20 +2,24 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import configData from "../../config.json";
-import debounce from "lodash.debounce";
+import PublicationPopupForm from "../../utils/Forms/PublicationForms/PublicationPopupForm";
+import { useRouter } from "next/navigation";
 
 function AllInsights({ searchTerm }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(6); // Start with 6 items
-  const [error, setError] = useState(null); // New state for error handling
+  const [page, setPage] = useState(6);
+  const [error, setError] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null); // Added state to store selected item
+  const router = useRouter();
 
   const domain = typeof window !== "undefined" ? window.location.hostname : "";
 
   const fetchContent = useCallback(async () => {
     setLoading(true);
-    setError(null); // Reset the error state before each fetch
-    
+    setError(null);
+
     try {
       let server;
       if (
@@ -107,7 +111,23 @@ function AllInsights({ searchTerm }) {
     .filter((item) =>
       item.title.rendered.toLowerCase().includes(searchTerm.toLowerCase()),
     )
-    .slice(0, page); // Show only up to the current page count
+    .slice(0, page);
+
+  const handleFormSubmit = (formData) => {
+    console.log("Item:", selectedItem); // Logs selected item
+    if (selectedItem && selectedItem.acf && selectedItem.acf.publication_url) {
+      window.location.href = selectedItem.acf.publication_url;
+    } else if (selectedItem && selectedItem.slug) {
+      router.push(`/publications/${selectedItem.slug}`);
+    } else {
+      console.error("Item is undefined or missing necessary properties");
+    }
+  };
+
+  const handleCloseForm = () => {
+    setShowForm(false);
+    setSelectedItem(null); // Clear selected item on form close
+  };
 
   return (
     <div className="mx-auto grid w-11/12 gap-4 py-12 lg:grid-cols-2">
@@ -139,25 +159,37 @@ function AllInsights({ searchTerm }) {
                   __html: stripHTMLAndLimit(item.content.rendered),
                 }}
               ></p>
-              <Link
-                href={`/publications/${item.slug}`}
-                className="font-semibold text-custom-red"
-              >
-                Read more
-              </Link>
-
-              {/* <Link
-                href={
-                  item.publication_url 
-                    ? item.publication_url
-                    : `/publications/${item.slug}`
-                }
-                className="font-semibold text-custom-red"
-                target={item.publication_url ? "_blank" : "_self"} // Open external links in a new tab
-                rel={item.publication_url ? "noopener noreferrer" : ""}
-              >
-                Read more
-              </Link> */}
+              {item.acf.publication_url ? (
+                <>
+                  {showForm ? (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-50">
+                      <PublicationPopupForm
+                        onSubmit={handleFormSubmit}
+                        onClose={handleCloseForm}
+                        item={selectedItem} // Pass the selected item to the form
+                      />
+                    </div>
+                  ) : (
+                    <Link
+                      href="#"
+                      className="font-semibold text-custom-red"
+                      onClick={() => {
+                        setShowForm(true);
+                        setSelectedItem(item); // Store the selected item
+                      }}
+                    >
+                      Read more
+                    </Link>
+                  )}
+                </>
+              ) : (
+                <Link
+                  href={`/publications/${item.slug}`}
+                  className="font-semibold text-custom-red"
+                >
+                  Read more
+                </Link>
+              )}
             </div>
           </div>
         ))
