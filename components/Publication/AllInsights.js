@@ -67,18 +67,7 @@ function AllInsights({ searchTerm }) {
   const formatDateString = (dateString) => {
     const date = new Date(dateString);
     const monthAbbreviations = [
-      "JAN",
-      "FEB",
-      "MAR",
-      "APR",
-      "MAY",
-      "JUN",
-      "JUL",
-      "AUG",
-      "SEP",
-      "OCT",
-      "NOV",
-      "DEC",
+      "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",
     ];
     return (
       <div className="flex flex-row items-center gap-2 lg:flex-col lg:gap-0">
@@ -162,7 +151,7 @@ function AllInsights({ searchTerm }) {
               {item.acf.publication_url ? (
                 <>
                   {showForm ? (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-50">
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 bg-opacity-50">
                       <PublicationPopupForm
                         onSubmit={handleFormSubmit}
                         onClose={handleCloseForm}
