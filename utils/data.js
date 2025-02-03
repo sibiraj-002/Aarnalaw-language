@@ -270,9 +270,9 @@ export const contactAddress = [
   },
   {
     location: "NEW DELHI",
-    // address: "Ground Floor Taj Ambassador, Sujan Singh Marg New Delhi 110003",
+    address: "Aarna Law LLP, Flat No.503, Silver Arch Apartments, 22, Feroz Shah Road, New Delhi-110001",
     // phone: "+91 11 4350 5878",
-    direction: "",
+    direction: "https://www.google.com/maps/search/Aarna+Law+LLP,+Flat+No.503,+Silver+Arch+Apartments,+22,+Feroz+Shah+Road,+New+Delhi-110001/@28.623814,77.2238841,836m/data=!3m2!1e3!4b1?entry=ttu&g_ep=EgoyMDI1MDEyOS4xIKXMDSoJLDEwMjExMjM0SAFQAw%3D%3D",
   },
   {
     location: "MUMBAI",
