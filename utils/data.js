@@ -270,14 +270,14 @@ export const contactAddress = [
   },
   {
     location: "NEW DELHI",
-    address: "Aarna Law LLP, Flat No.503, Silver Arch Apartments, 22, Feroz Shah Road, New Delhi-110001",
+    address: "Flat No.503, Silver Arch Apartments, 22, Feroz Shah Road, New Delhi-110001",
     // phone: "+91 11 4350 5878",
     direction: "https://www.google.com/maps/search/Aarna+Law+LLP,+Flat+No.503,+Silver+Arch+Apartments,+22,+Feroz+Shah+Road,+New+Delhi-110001/@28.623814,77.2238841,836m/data=!3m2!1e3!4b1?entry=ttu&g_ep=EgoyMDI1MDEyOS4xIKXMDSoJLDEwMjExMjM0SAFQAw%3D%3D",
   },
   {
     location: "MUMBAI",
     address:
-      "Aarna Law, 2nd Floor - 225, Trade Centre, BKC, Bandra East, Mumbai - 400051",
+      "225, 2nd Floor, Trade Centre, Bandra Kurla Complex, Mumbai 400051",
     // phone: "+022 4077 9109",
     direction:
       "https://www.google.com/maps/place/AARNA+LAW+LLP/@19.071377,72.8683523,17z/data=!4m10!1m2!2m1!1sAarna+Law,+2nd+Floor+%E2%80%93+225,+Trade+Centre,+BKC,+Bandra+East,+Mumbai+-+400051!3m6!1s0x3be7c978c0a74db7:0xa396de467594668f!8m2!3d19.068488!4d72.8702805!15sCk1BYXJuYSBMYXcsIDJuZCBGbG9vciDigJMgMjI1LCBUcmFkZSBDZW50cmUsIEJLQywgQmFuZHJhIEVhc3QsIE11bWJhaSAtIDQwMDA1MZIBDmxlZ2FsX3NlcnZpY2Vz4AEA!16s%2Fg%2F11wmz9s7z0?hl=en&entry=ttu&g_ep=EgoyMDI1MDExNS4wIKXMDSoASAFQAw%3D%3D",
