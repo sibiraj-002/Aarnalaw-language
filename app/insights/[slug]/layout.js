@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
         description: "Insights | Aarna Law",
         images: [
           {
-            url: "/aarna-law.png",
+            url: imageUrl,
             width: 1200,
             height: 630,
             alt: "Insights | Aarna Law",
@@ -24,8 +24,6 @@ export async function generateMetadata({ params }) {
         ],
       },
     };
-
-    
   }
 
   const postData = await response.json();
