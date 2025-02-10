@@ -24,6 +24,8 @@ export async function generateMetadata({ params }) {
         ],
       },
     };
+
+    
   }
 
   const postData = await response.json();
