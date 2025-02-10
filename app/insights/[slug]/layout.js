@@ -2,7 +2,6 @@ export async function generateMetadata({ params }) {
   const response = await fetch(
     `https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed=wp:featuredmedia&slug=${params.slug}`
   );
-  
 
   if (!response.ok) {
     console.error("Failed to fetch post data:", response.statusText);
@@ -16,7 +15,7 @@ export async function generateMetadata({ params }) {
         description: "Insights | Aarna Law",
         images: [
           {
-            url: imageUrl,
+            url: imageUrl, // Fallback default image
             width: 1200,
             height: 630,
             alt: "Insights | Aarna Law",
@@ -39,7 +38,9 @@ export async function generateMetadata({ params }) {
 
   // Use only the featured image from `wp:featuredmedia`
   const imageUrl =
-    post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/aarna-law.png";
+    post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url ;
+
+  console.log("Featured image URL:", imageUrl); // Add this to verify the image URL
 
   return {
     title: `${metaTitle} - Insights | Aarna Law`,
@@ -66,6 +67,7 @@ export async function generateMetadata({ params }) {
     },
   };
 }
+
 
 export default function RootLayout({ children }) {
   return <>{children}</>;
