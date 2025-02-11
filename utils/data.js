@@ -260,6 +260,7 @@ export const partnersMembers = [
   },
 ];
 
+
 export const contactAddress = [ 
   {
     location: "BENGALURU",
