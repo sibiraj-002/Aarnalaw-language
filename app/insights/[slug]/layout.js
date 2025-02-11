@@ -22,7 +22,7 @@ export async function generateMetadata({ params }) {
 
     // Extract featured image
     let imageUrl = post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "";
-    
+
     // Add a timestamp to the image URL to prevent caching
     if (imageUrl) {
       imageUrl += `?t=${new Date().getTime()}`;
@@ -60,7 +60,6 @@ export async function generateMetadata({ params }) {
   }
 }
 
-// Function to return default metadata if API fails
 function getDefaultMetadata(slug) {
   return {
     title: "Insights | Aarna Law",
@@ -82,7 +81,6 @@ function getDefaultMetadata(slug) {
   };
 }
 
-// Root Layout component
 export default function RootLayout({ children }) {
   return <>{children}</>;
 }
