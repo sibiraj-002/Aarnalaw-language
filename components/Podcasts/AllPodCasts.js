@@ -1,15 +1,16 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef ,useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { play, pause, sound, mute, nextIcon, prevIcon } from "@/utils/icons";
 import FloatingAudioPlayer from "./FloatingAudioPlayer";
 import { initFlowbite } from "flowbite";
+import configData from "../../config.json";
 
 function AllPodCasts({ searchTerm }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(6);
   const [hasMore, setHasMore] = useState(true);
   const [currentPodcastIndex, setCurrentPodcastIndex] = useState(null);
   const [volume, setVolume] = useState(1.0);
@@ -18,8 +19,11 @@ function AllPodCasts({ searchTerm }) {
   const [currentTime, setCurrentTime] = useState({});
   const [duration, setDuration] = useState({});
   const [expandedExcerpt, setExpandedExcerpt] = useState({});
+  const [error, setError] = useState(null); 
 
   const audioRefs = useRef({});
+
+  const domain = typeof window !== "undefined" ? window.location.hostname : "";
 
   const handlePlayPause = (index, playerLink) => {
     const audio = audioRefs.current[index];
@@ -68,61 +72,69 @@ function AllPodCasts({ searchTerm }) {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `https://docs.aarnalaw.com/wp-json/wp/v2/podcast?_embed&per_page=6&page=${page}`,
-        );
-        if (!response.ok) throw new Error("Failed to fetch data");
-        const result = await response.json();
 
-        if (Array.isArray(result)) {
-          if (result.length < 6) setHasMore(false);
-          const dataWithImages = await Promise.all(
-            result.map(async (item) => {
-              if (item.featured_media) {
-                try {
-                  const mediaResponse = await fetch(
-                    `https://docs.aarnalaw.com/wp-json/wp/v2/media/${item.featured_media}`,
-                  );
-                  const mediaResult = await mediaResponse.json();
-                  item.featured_image_url = mediaResult.source_url || null;
-                } catch (error) {
-                  console.error(
-                    `Error fetching media for post ${item.id}:`,
-                    error,
-                  );
-                  item.featured_image_url = null;
-                }
-              } else {
-                item.featured_image_url = null;
-              }
-              return item;
-            }),
-          );
-          setData((prevData) => [
-            ...prevData,
-            ...dataWithImages.filter(
-              (newPost) =>
-                !prevData.some(
-                  (existingPost) => existingPost.id === newPost.id,
-                ),
-            ),
-          ]);
-        } else {
-          console.error("Expected an array but got:", result);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
+
+  const fetchContent = useCallback(async () => {
+    setLoading(true);
+    setError(null); // Reset the error state before each fetch
+  
+    try {
+      let server;
+      if (domain === `${configData.LIVE_SITE_URL}` || domain === `${configData.LIVE_SITE_URL_WWW}`) {
+        server = `${configData.LIVE_PRODUCTION_SERVER_ID}`;
+      } else if (domain === `${configData.STAGING_SITE_URL}`) {
+        server = `${configData.STAG_PRODUCTION_SERVER_ID}`;
+      } else {
+        server = `${configData.STAG_PRODUCTION_SERVER_ID}`;
       }
-    };
-    fetchData();
-    initFlowbite(); // Initialize Flowbite after the data is loaded
-  }, [page]);
+  
+      const publicationsResponse = await fetch(
+        `${configData.SERVER_URL}podcast?_embed&status[]=publish&production_mode[]=${server}&per_page=${page}`
+      );
+  
+      if (!publicationsResponse.ok) {
+        throw new Error("Failed to fetch data");
+      }
+  
+      const result = await publicationsResponse.json();
+  
+      if (result.length === 0) {
+        setHasMore(false);
+        setLoading(false);
+        return;
+      }
+  
+      const transformedData = result.map((item) => ({
+        ...item,
+        featured_image_url: item.episode_featured_image || "", // Use episode_featured_image for the featured image
+      }));
+  
+      setData((prevData) => [
+        ...prevData,
+        ...transformedData.filter(
+          (newPost) => !prevData.some((prevPost) => prevPost.id === newPost.id)
+        ),
+      ]);
+      setHasMore(result.length === page);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+      setError("Something went wrong. Please try again later.");
+    }
+  }, [page, domain]);
+  
+  
+
+
+  
+
+// Run fetchContent on page change
+useEffect(() => {
+  fetchContent();
+}, [page, fetchContent]);
+
+
 
   useEffect(() => {
     const currentAudioRefs = audioRefs.current;
@@ -141,7 +153,7 @@ function AllPodCasts({ searchTerm }) {
             100,
         }));
       });
-      currentAudioRefs[index].addEventListener("loadedmetadata", () => {
+      currentAudioRefs[index].addEventListener("loadedmetadata", () => { 
         setDuration((prev) => ({
           ...prev,
           [index]: currentAudioRefs[index].duration,
@@ -172,7 +184,7 @@ function AllPodCasts({ searchTerm }) {
     </div>
   );
 
-  const loadMorePosts = () => setPage((prevPage) => prevPage + 1);
+  const loadMorePosts = () => setPage((prevPage) => prevPage + 6);
 
   const filteredInsights = data.filter((data) =>
     data.title.rendered.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -187,130 +199,140 @@ function AllPodCasts({ searchTerm }) {
 
   return (
     <div className="flex flex-col">
-      <div className="mx-auto grid w-full gap-4 p-4 md:grid-cols-2 md:p-12">
-        {loading && filteredInsights.length === 0 ? (
-          Array.from({ length: 4 }).map((_, index) => (
-            <SkeletonLoader key={index} />
-          ))
-        ) : filteredInsights.length > 0 ? (
-          filteredInsights.map((item, index) => (
-            <div
-              className={`rounded-lg border ${
-                currentPodcastIndex === index
-                  ? "border-red-500"
-                  : "border-gray-200"
-              } bg-white shadow dark:border-gray-700 dark:bg-gray-800`}
-              key={item.id}
-            >
-              <div className="relative">
-                {item.featured_image_url && (
-                  <Image
-                    src={item.featured_image_url}
-                    alt={item.title?.rendered || "Podcast Image"}
-                    className="w-full rounded-t-lg lg:h-[300px]"
-                    width={500}
-                    height={500}
-                  />
-                )}
-              </div>
-              <div className="p-5">
-                <h5
-                  className="mb-2 min-h-16 text-xl font-bold tracking-tight text-gray-900 dark:text-white"
-                  dangerouslySetInnerHTML={{ __html: item.title?.rendered }}
-                ></h5>
-                <p
-                  className="text-gray-700 dark:text-gray-300"
-                  dangerouslySetInnerHTML={{
-                    __html: expandedExcerpt[item.id]
-                      ? item.excerpt.rendered
-                      : item.excerpt.rendered.slice(0, 100),
-                  }}
-                ></p>
-                {item.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, "").length >
-                  100 && (
-                  <button
-                    onClick={() => toggleExcerpt(item.id)}
-                    className="text-custom-red"
-                  >
-                    {expandedExcerpt[item.id] ? "Read Less" : "Read More"}
-                  </button>
-                )}
-              </div>
-
-              {item.player_link && (
-                <div className="flex items-center justify-between px-4 pb-4">
-                  <button
-                    className="rounded-full bg-custom-blue p-2 text-xl text-white hover:bg-custom-red"
-                    onClick={() => handlePlayPause(index, item.player_link)}
-                  >
-                    {currentPodcastIndex === index ? pause : play}
-                  </button>
-                  <div className="mx-4 flex-1 rounded-lg border border-gray-200 p-2">
-                    <span>
-                      {formatTime(currentTime[index] || 0)} /{" "}
-                      {formatTime(duration[index] || 0)}
-                    </span>
-                    <div
-                      className="relative mb-1 h-2.5 w-full cursor-pointer rounded-full bg-gray-200"
-                      onClick={(e) => {
-                        const rect = e.currentTarget.getBoundingClientRect();
-                        const clickPosition = e.clientX - rect.left; // Click position relative to the progress bar
-                        const newTime =
-                          (clickPosition / e.currentTarget.offsetWidth) *
-                          (duration[index] || 0); // Calculate the new time
-                        const audio = audioRefs.current[index];
-                        audio.currentTime = newTime; // Seek audio
-                      }}
-                    >
-                      <div
-                        className="h-2.5 rounded-full bg-red-500"
-                        style={{ width: `${progress[index] || 0}%` }}
-                      />
-                    </div>
-                  </div>
-                  <button
-                    className="rounded-full bg-custom-blue p-2 text-xl text-white hover:bg-custom-red"
-                    onClick={() => handleVolumeToggle(index)}
-                  >
-                    {mutedStatus[index] ? mute : sound}
-                  </button>
-                </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <div className="col-span-1 mt-4 text-center text-gray-500 md:col-span-2">
-            No related post found
+  <div className="mx-auto grid w-full gap-4 p-4 md:grid-cols-2 md:p-12">
+    {loading && filteredInsights.length === 0 ? (
+      Array.from({ length: 4 }).map((_, index) => (
+        <SkeletonLoader key={index} />
+      ))
+    ) : filteredInsights.length > 0 ? (
+      filteredInsights.map((item, index) => (
+        <div
+          className={`rounded-lg border ${
+            currentPodcastIndex === index
+              ? "border-red-500"
+              : "border-gray-200"
+          } bg-white shadow dark:border-gray-700 dark:bg-gray-800`}
+          key={item.id}
+        >
+          {/* Render Podcast Card */}
+          <div className="relative">
+            {item.featured_image_url && (
+              <Image
+                src={item.featured_image_url}
+                alt={item.title?.rendered || "Podcast Image"}
+                className="w-full rounded-t-lg lg:h-[300px]"
+                width={500}
+                height={500}
+              />
+            )}
           </div>
-        )}
-      </div>
-      {!loading && hasMore && filteredInsights.length > 0 && (
-        <div className="col-span-1 mt-6 flex justify-center md:col-span-2">
-          <button
-            onClick={loadMorePosts}
-            className="bg-custom-red px-4 py-2 text-white"
-          >
-            Load More
-          </button>
-        </div>
-      )}
+          <div className="p-5">
+            <h5
+              className="mb-2 min-h-16 text-xl font-bold tracking-tight text-gray-900 dark:text-white"
+              dangerouslySetInnerHTML={{ __html: item.title?.rendered }}
+            ></h5>
+            <p
+              className="text-gray-700 dark:text-gray-300"
+              dangerouslySetInnerHTML={{
+                __html: expandedExcerpt[item.id]
+                  ? item.excerpt.rendered
+                  : item.excerpt.rendered.slice(0, 100),
+              }}
+            ></p>
+            {item.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, "").length >
+              100 && (
+              <button
+                onClick={() => toggleExcerpt(item.id)}
+                className="text-custom-red"
+              >
+                {expandedExcerpt[item.id] ? "Read Less" : "Read More"}
+              </button>
+            )}
+          </div>
 
-      <FloatingAudioPlayer
-        currentPodcastIndex={currentPodcastIndex}
-        podcasts={data}
-        handlePlayPause={handlePlayPause}
-        handleVolumeToggle={handleVolumeToggle}
-        handleSeek={handleSeek}
-        progress={progress}
-        currentTime={currentTime}
-        duration={duration}
-        mutedStatus={mutedStatus}
-        volume={volume}
-        handleNext={handleNext}
-        handlePrevious={handlePrevious}
-        formatTime={formatTime}
-      />
+          {/* Player Controls */}
+          {item.player_link && (
+            <div className="flex items-center justify-between px-4 pb-4">
+              <button
+                className="rounded-full bg-custom-blue p-2 text-xl text-white hover:bg-custom-red"
+                onClick={() => handlePlayPause(index, item.player_link)}
+              >
+                {currentPodcastIndex === index ? pause : play}
+              </button>
+              <div className="mx-4 flex-1 rounded-lg border border-gray-200 p-2">
+                <span>
+                  {formatTime(currentTime[index] || 0)} /{" "}
+                  {formatTime(duration[index] || 0)}
+                </span>
+                <div
+                  className="relative mb-1 h-2.5 w-full cursor-pointer rounded-full bg-gray-200"
+                  onClick={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const clickPosition = e.clientX - rect.left;
+                    const newTime =
+                      (clickPosition / e.currentTarget.offsetWidth) *
+                      (duration[index] || 0);
+                    const audio = audioRefs.current[index];
+                    audio.currentTime = newTime;
+                  }}
+                >
+                  <div
+                    className="h-2.5 rounded-full bg-red-500"
+                    style={{ width: `${progress[index] || 0}%` }}
+                  />
+                </div>
+              </div>
+              <button
+                className="rounded-full bg-custom-blue p-2 text-xl text-white hover:bg-custom-red"
+                onClick={() => handleVolumeToggle(index)}
+              >
+                {mutedStatus[index] ? mute : sound}
+              </button>
+            </div>
+          )}
+        </div>
+      ))
+    ) : (
+      <div className="col-span-1 mt-4 text-center text-gray-500 md:col-span-2">
+        No related post found
+      </div>
+    )}
+  </div>
+
+  {!loading && hasMore && filteredInsights.length > 0 && (
+    <div className="col-span-1 mt-6 flex justify-center md:col-span-2">
+      <button
+        onClick={loadMorePosts}
+        className="bg-custom-red px-4 py-2 text-white"
+      >
+        Load More
+      </button>
     </div>
+  )}
+
+  {!loading && !hasMore && (
+    <div className="col-span-1 mt-6 flex justify-center text-gray-500 md:col-span-2">
+      No more details available
+    </div>
+  )}
+
+  <FloatingAudioPlayer
+    currentPodcastIndex={currentPodcastIndex}
+    podcasts={data}
+    handlePlayPause={handlePlayPause}
+    handleVolumeToggle={handleVolumeToggle}
+    handleSeek={handleSeek}
+    progress={progress}
+    currentTime={currentTime}
+    duration={duration}
+    mutedStatus={mutedStatus}
+    volume={volume}
+    handleNext={handleNext}
+    handlePrevious={handlePrevious}
+    formatTime={formatTime}
+  />
+</div>
+
   );
 }
 

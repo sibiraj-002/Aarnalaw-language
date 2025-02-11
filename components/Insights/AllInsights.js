@@ -1,7 +1,7 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import configData from "../../config.json";
 
 function AllInsights({ searchTerm }) {
   const [data, setData] = useState([]);
@@ -23,19 +23,40 @@ function AllInsights({ searchTerm }) {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
+  const cat1 = 12;
+  const cat2 = 13;
+
   const fetchData = async (year) => {
     setLoading(true);
+    // let web_url = "https://docs.aarnalaw.com/wp-json/wp/v2/posts";
     try {
       const after = `${year}-01-01T00:00:00`;
       const before = `${year}-12-31T23:59:59`;
 
-      const url = `https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed&per_page=100&categories=13,14&after=${after}&before=${before}`;
+      const domain =
+        typeof window !== "undefined" ? window.location.hostname : "";
+
+      let server;
+
+      if (
+        domain === `${configData.LIVE_SITE_URL}` ||
+        domain === `${configData.LIVE_SITE_URL_WWW}`
+      ) {
+        server = `${configData.LIVE_PRODUCTION_SERVER_ID}`;
+      } else if (domain === `${configData.STAGING_SITE_URL}`) {
+        server = `${configData.STAG_PRODUCTION_SERVER_ID}`;
+      } else {
+        server = `${configData.STAG_PRODUCTION_SERVER_ID}`;
+      }
+
+      const url = `https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed&per_page=100&categories=${cat1},${cat2}&after=${after}&before=${before}&status[]=publish&production_mode[]=${server}`;
       const response = await fetch(url);
       const result = await response.json();
+      console.log(result);
 
       if (Array.isArray(result)) {
         const sortedData = result.sort(
-          (a, b) => new Date(b.date) - new Date(a.date)
+          (a, b) => new Date(b.date) - new Date(a.date),
         );
 
         setData(
@@ -43,28 +64,8 @@ function AllInsights({ searchTerm }) {
             ...item,
             featured_image_url: null,
             isImageLoading: true,
-          }))
+          })),
         );
-
-        sortedData.forEach(async (item, index) => {
-          if (item.featured_media) {
-            try {
-              const mediaResponse = await fetch(
-                `https://docs.aarnalaw.com/wp-json/wp/v2/media/${item.featured_media}`
-              );
-              const mediaResult = await mediaResponse.json();
-              setData((prevData) => {
-                const updatedData = [...prevData];
-                updatedData[index].featured_image_url =
-                  mediaResult.source_url || null;
-                updatedData[index].isImageLoading = false;
-                return updatedData;
-              });
-            } catch (error) {
-              console.error(`Error fetching media for post ${item.id}:`, error);
-            }
-          }
-        });
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -77,7 +78,7 @@ function AllInsights({ searchTerm }) {
     const fetchArchives = async () => {
       try {
         const response = await fetch(
-          `https://docs.aarnalaw.com/wp-json/wp/v2/archives`
+          `https://docs.aarnalaw.com/wp-json/wp/v2/archives`,
         );
         const archivesData = await response.json();
 
@@ -89,7 +90,6 @@ function AllInsights({ searchTerm }) {
 
         setArchives(sortedArchives);
 
-        // Default to 2025 archive or fallback to the latest archive if 2025 is not available
         const defaultArchive =
           sortedArchives.find((archive) => archive.name === "2025") ||
           sortedArchives[0];
@@ -123,25 +123,14 @@ function AllInsights({ searchTerm }) {
           .includes(debouncedSearchTerm.toLowerCase()) ||
         item.excerpt.rendered
           .toLowerCase()
-          .includes(debouncedSearchTerm.toLowerCase())
+          .includes(debouncedSearchTerm.toLowerCase()),
     )
     .slice(0, visibleItems);
 
   const formatDateString = (dateString) => {
     const date = new Date(dateString);
     const monthAbbreviations = [
-      "JAN",
-      "FEB",
-      "MAR",
-      "APR",
-      "MAY",
-      "JUN",
-      "JUL",
-      "AUG",
-      "SEP",
-      "OCT",
-      "NOV",
-      "DEC",
+      "JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC", 
     ];
     const day = date.getDate();
     const month = monthAbbreviations[date.getMonth()];
@@ -174,15 +163,21 @@ function AllInsights({ searchTerm }) {
             >
               <Image
                 src={
-                  item.isImageLoading
-                    ? "/PracticeArea/Aarna-Law-Banner-img.png"
-                    : item.featured_image_url ||
+                 item._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
                       "/PracticeArea/Aarna-Law-Banner-img.png"
                 }
                 alt={item.title.rendered}
                 className="h-[200px] w-full rounded-t-lg object-cover"
                 width={500}
                 height={300}
+                onLoadingComplete={() =>
+                  setData((prevData) => {
+                    const updatedData = prevData.map((p) =>
+                      p.id === item.id ? { ...p, isImageLoading: false } : p,
+                    );
+                    return updatedData;
+                  })
+                }
               />
               <div className="p-5">
                 <h5

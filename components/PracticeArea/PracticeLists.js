@@ -1,43 +1,54 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import configData from "../../config.json";
 
 function PracticeLists() {
   const [data, setData] = useState([]); // Initialize data state with an empty array
   const [loading, setLoading] = useState(true); // Loading state for skeleton
+  const [page, setPage] = useState(100);
+
+  const domain = typeof window !== "undefined" ? window.location.hostname : "";
+
+  const fetchContent = useCallback(async () => {
+    setLoading(true);
+    try {
+      let server;
+      if (domain === `${configData.LIVE_SITE_URL}`) {
+        server = `${configData.LIVE_PRODUCTION_SERVER_ID}`;
+      } else if (domain === `${configData.STAGING_SITE_URL}`) {
+        server = `${configData.STAG_PRODUCTION_SERVER_ID}`;
+      } else {
+        server = `${configData.STAG_PRODUCTION_SERVER_ID}`;
+      }
+
+      const practiceAreaResponse = await fetch(
+        `${configData.SERVER_URL}practice-areas?_embed&status[]=publish&production_mode[]=${server}&per_page=${page}`,
+      );
+
+      const practiceAreaData = await practiceAreaResponse.json();
+
+      if (practiceAreaData.length === 0) {
+        setHasMore(false);
+      } else {
+        const sortedData = practiceAreaData.sort((a, b) =>
+          a.title.rendered.localeCompare(b.title.rendered)
+        );
+        setData(sortedData);
+        setHasMore(practiceAreaData.length === page); // Check if more pages are available
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    }
+  }, [page, domain]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://docs.aarnalaw.com/wp-json/wp/v2/practice-areas?_embed&per_page=100`,
-        );
-        const result = await response.json();
-
-        
-
-        // Ensure the response is an array before setting the data
-        if (Array.isArray(result)) {
-          // Sort the data alphabetically by title
-          const sortedData = result.sort((a, b) => {
-            const titleA = a.title.rendered.toLowerCase(); // Convert to lowercase for case-insensitive comparison
-            const titleB = b.title.rendered.toLowerCase();
-            return titleA.localeCompare(titleB); // Compare titles
-          });
-          setData(sortedData);
-        } else {
-          console.error("Expected an array but got:", result);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false); // Set loading to false once data is fetched
-      }
-    };
-
-    fetchData();
-  }, []);
+    fetchContent();
+  }, [page, fetchContent]);
 
   return (
     <div>

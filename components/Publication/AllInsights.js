@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import configData from "../../config.json";
+import configData from "../../config.json";   
 import PublicationPopupForm from "../../utils/Forms/PublicationForms/PublicationPopupForm";
 import { useRouter } from "next/navigation";
 
@@ -67,7 +67,18 @@ function AllInsights({ searchTerm }) {
   const formatDateString = (dateString) => {
     const date = new Date(dateString);
     const monthAbbreviations = [
-      "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC",
     ];
     return (
       <div className="flex flex-row items-center gap-2 lg:flex-col lg:gap-0">

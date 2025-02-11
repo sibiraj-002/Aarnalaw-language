@@ -1,39 +1,54 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { initFlowbite } from "flowbite";
 import ContactModal from "@/components/ModalContact/page";
+import configData from "../../config.json";
 
 function PracticeLists() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(100);
+
+  const domain = typeof window !== "undefined" ? window.location.hostname : "";
+
+  const fetchContent = useCallback(async () => {
+    setLoading(true);
+    try {
+      let server;
+      if (domain === `${configData.LIVE_SITE_URL}`) {
+        server = `${configData.LIVE_PRODUCTION_SERVER_ID}`;
+      } else if (domain === `${configData.STAGING_SITE_URL}`) {
+        server = `${configData.STAG_PRODUCTION_SERVER_ID}`;
+      } else {
+        server = `${configData.STAG_PRODUCTION_SERVER_ID}`;
+      }
+
+      const practiceAreaResponse = await fetch(
+        `${configData.SERVER_URL}jobs?_embed&status[]=publish&production_mode[]=${server}&per_page=${page}`,
+      );
+
+      const practiceAreaData = await practiceAreaResponse.json();
+
+      if (practiceAreaData.length === 0) {
+        setHasMore(false);
+      } else {
+        const sortedData = practiceAreaData.sort(
+          (a, b) => new Date(b.date) - new Date(a.date),
+        );
+        setData(sortedData);
+        setHasMore(practiceAreaData.length === page); // Check if more pages are available
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    }
+  }, [page, domain]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://docs.aarnalaw.com/wp-json/wp/v2/jobs?_embed&per_page=100`,
-        );
-        const result = await response.json();
-        if (Array.isArray(result)) {
-          const sortedData = result.sort((a, b) => {
-            const titleA = a.title.rendered.toLowerCase();
-            const titleB = b.title.rendered.toLowerCase();
-            return titleA.localeCompare(titleB);
-          });
-          setData(sortedData);
-        } else {
-          console.error("Expected an array but got:", result);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-        initFlowbite(); // Initialize Flowbite after the data is loaded
-      }
-    };
-
-    fetchData();
-  }, []);
+    fetchContent();
+  }, [page, fetchContent]);
 
   return (
     <div>
@@ -78,40 +93,38 @@ function PracticeLists() {
             {data.map((item, index) => (
               <div key={index}>
                 <h2 id={`accordion-flush-heading-${index}`}>
-  <button
-    type="button"
-    className="flex w-full items-center justify-between gap-8 border-b border-gray-200 py-5 text-lg font-medium text-custom-blue dark:border-gray-700 dark:text-gray-400"
-    data-accordion-target={`#accordion-flush-body-${index}`}
-    aria-expanded="false"
-    aria-controls={`accordion-flush-body-${index}`}
-    onClick={() =>
-      document
-        .querySelector(`#accordion-flush-body-${index}`)
-        .classList.toggle("hidden")
-    }
-  >
-    <span
-      className="flex-1 text-left"
-      dangerouslySetInnerHTML={{ __html: item.title.rendered }}
-    ></span>
-    <svg
-      className="ml-auto size-3 shrink-0"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 10 6"
-    >
-      <path
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M9 5 5 1 1 5"
-      />
-    </svg>
-  </button>
-</h2>
-
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between gap-3 border-b border-gray-200 py-5 text-lg font-medium text-custom-blue dark:border-gray-700 dark:text-gray-400"
+                    data-accordion-target={`#accordion-flush-body-${index}`}
+                    aria-expanded="false"
+                    aria-controls={`accordion-flush-body-${index}`}
+                    onClick={() =>
+                      document
+                        .querySelector(`#accordion-flush-body-${index}`)
+                        .classList.toggle("hidden")
+                    }
+                  >
+                    <span
+                      dangerouslySetInnerHTML={{ __html: item.title.rendered }}
+                    ></span>
+                    <svg
+                      className="size-3 shrink-0"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 10 6"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9 5 5 1 1 5"
+                      />
+                    </svg>
+                  </button>
+                </h2>
                 <div
                   id={`accordion-flush-body-${index}`}
                   className="hidden"
@@ -121,7 +134,8 @@ function PracticeLists() {
                     <p
                       className="careers mb-2 text-black dark:text-gray-400"
                       dangerouslySetInnerHTML={{
-                        __html: item.content.rendered,
+                        __html:
+                          item.content?.rendered || "No content available.",
                       }}
                     />
                   </div>
@@ -129,7 +143,7 @@ function PracticeLists() {
               </div>
             ))}
 
-            <div className="flex w-full justify-start">
+            <div className="flex w-full justify-start mt-5">
               <ContactModal
                 btnName="Apply Now"
                 textColor="text-custom-red"
