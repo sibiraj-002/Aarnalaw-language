@@ -2,19 +2,12 @@ import React from "react";
 import Image from "next/image";
 
 export default function Banner({ title, backgroundImage }) {
+  if (!backgroundImage) return null; // Do not render if no image is provided
+
   return (
-    <div
-    // className="relative h-[100vh] bg-cover bg-center"
-    // style={{
-    //   backgroundImage: backgroundImage
-    //     ? `url(${backgroundImage})`
-    //     : `url('/PracticeArea/PracticeAreas.png')`,
-    // }}
-    >
+    <div>
       <Image
-        src={
-          backgroundImage ? backgroundImage : "/PracticeArea/Aarna-Law-Banner-img.png"
-        }
+        src={backgroundImage}
         width={600}
         height={600}
         className="w-full"
