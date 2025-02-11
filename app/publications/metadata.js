@@ -11,6 +11,6 @@ export const generateMetadata = () => ({
       description:
         "Stay informed with the latest legal insights and expert analyses across diverse practice areas. Explore Aarna Law's thought leadership and stay ahead in the legal landscape.",
       url: "https://www.aarnalaw.com/insights",
-      images: "/insights/InsightsBanner.jpg",
+      images: "/insights/publications-og-banner.jpg",
     },
   });
