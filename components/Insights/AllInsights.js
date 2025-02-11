@@ -162,10 +162,7 @@ function AllInsights({ searchTerm }) {
               key={item.id}
             >
               <Image
-                src={
-                 item._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-                      "/PracticeArea/Aarna-Law-Banner-img.png"
-                }
+                src={item._embedded?.["wp:featuredmedia"]?.[0]?.source_url}
                 alt={item.title.rendered}
                 className="h-[200px] w-full rounded-t-lg object-cover"
                 width={500}
