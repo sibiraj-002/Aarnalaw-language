@@ -15,6 +15,9 @@
 //       images: "insights/InsightsBanner.jpg",
 //     },
 //   };
+
+
+
   
   export default function InsightsLayout({ children }) {
     return <>{children}</>;
