@@ -57,19 +57,7 @@ export default function Page({ params }) {
 
   const formatDateString = (dateString) => {
     const date = new Date(dateString);
-    const monthAbbreviations = [
-      "JAN",
-      "FEB",
-      "MAR",
-      "APR",
-      "MAY",
-      "JUN",
-      "JUL",
-      "AUG",
-      "SEP",
-      "OCT",
-      "NOV",
-      "DEC",
+    const monthAbbreviations = [ "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",
     ];
     const day = date.getDate();
     const month = monthAbbreviations[date.getMonth()];
