@@ -11,7 +11,7 @@ export const metadata = {
     description:
       "Access a comprehensive collection of legal publications and research papers authored by Aarna Law's experts. Stay up-to-date with cutting-edge legal scholarship.",
     url: "/publications",
-    images: "/aarna-law.png",
+    images: "/insights/InsightsBanner.jpg",
   },
 };
 
