@@ -1,3 +1,5 @@
+// [slug]/layout.js
+
 export async function generateMetadata({ params }) {
   const apiUrl = `https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed=wp:featuredmedia&slug=${params.slug}`;
 
@@ -6,7 +8,7 @@ export async function generateMetadata({ params }) {
 
     if (!response.ok) {
       console.error("Failed to fetch post data:", response.statusText);
-      return getDefaultMetadata(params.slug);
+      return getDefaultMetadata(params.slug); // Fallback metadata
     }
 
     const postData = await response.json();
@@ -27,8 +29,6 @@ export async function generateMetadata({ params }) {
     if (imageUrl) {
       imageUrl += `?t=${new Date().getTime()}`;
     }
-
-    console.log("Final Featured Image URL:", imageUrl); // Debugging
 
     return {
       title: `${metaTitle} - Insights | Aarna Law`,
@@ -60,6 +60,7 @@ export async function generateMetadata({ params }) {
   }
 }
 
+// Default metadata fallback
 function getDefaultMetadata(slug) {
   return {
     title: "Insights | Aarna Law",

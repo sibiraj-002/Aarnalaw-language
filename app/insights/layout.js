@@ -6,6 +6,7 @@ export const metadata = {
   alternates: {
     canonical: "/insights",
   },
+  // Keep the OpenGraph for global insights page, not per post
   openGraph: {
     title: "Legal Insights and Expertise",
     description:
