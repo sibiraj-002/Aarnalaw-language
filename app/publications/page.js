@@ -1,16 +1,22 @@
-"use client";
-import React, { useState } from "react";
-import Banner from "@/components/Publication/Banner";
-import AllInsights from "@/components/Publication/AllInsights";
-import Navigation from "@/components/InsightsNavigation/Navigation";
+import InsightsClient from "./InsightsClient";
 
-export default function AarnaPublication() {
-  const [searchTerm, setSearchTerm] = useState("");
-  return (
-    <div>
-      <Banner title="publication" />
-      <Navigation searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <AllInsights searchTerm={searchTerm} />
-    </div>
-  );
+export const metadata = {
+  title: "Legal Insights and Expertise",
+  description:
+    "Stay informed with the latest legal insights and expert analyses across diverse practice areas. Explore Aarna Law's thought leadership and stay ahead in the legal landscape.",
+  metadataBase: new URL("https://www.aarnalaw.com"),
+  alternates: {
+    canonical: "/insights",
+  },
+  openGraph: {
+    title: "Legal Insights and Expertise",
+    description:
+      "Stay informed with the latest legal insights and expert analyses across diverse practice areas. Explore Aarna Law's thought leadership and stay ahead in the legal landscape.",
+    url: "https://www.aarnalaw.com/insights",
+    images: "/insights/InsightsBanner.jpg",
+  },
+};
+
+export default function AarnaInsightsPage() {
+  return <InsightsClient />;
 }
