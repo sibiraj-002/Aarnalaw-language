@@ -261,7 +261,9 @@ export const partnersMembers = [
 ];
 
 
-export const contactAddress = [ 
+
+
+export const contactAddress = [
   {
     location: "BENGALURU",
     address: "No. 5, 2nd Main Road, Vyalikaval, Bengaluru 560003",
