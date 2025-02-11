@@ -66,19 +66,7 @@ function AllInsights({ searchTerm }) {
 
   const formatDateString = (dateString) => {
     const date = new Date(dateString);
-    const monthAbbreviations = [
-      "JAN",
-      "FEB",
-      "MAR",
-      "APR",
-      "MAY",
-      "JUN",
-      "JUL",
-      "AUG",
-      "SEP",
-      "OCT",
-      "NOV",
-      "DEC",
+    const monthAbbreviations = [ "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",
     ];
     return (
       <div className="flex flex-row items-center gap-2 lg:flex-col lg:gap-0">
