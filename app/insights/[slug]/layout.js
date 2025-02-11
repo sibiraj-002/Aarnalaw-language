@@ -1,5 +1,4 @@
-// [slug]/layout.js
-
+// insights/[slug]/layout.js
 export async function generateMetadata({ params }) {
   const apiUrl = `https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed=wp:featuredmedia&slug=${params.slug}`;
 
@@ -8,7 +7,7 @@ export async function generateMetadata({ params }) {
 
     if (!response.ok) {
       console.error("Failed to fetch post data:", response.statusText);
-      return getDefaultMetadata(params.slug); // Fallback metadata
+      return getDefaultMetadata(params.slug);
     }
 
     const postData = await response.json();
@@ -24,7 +23,7 @@ export async function generateMetadata({ params }) {
 
     // Extract featured image
     let imageUrl = post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "";
-
+    
     // Add a timestamp to the image URL to prevent caching
     if (imageUrl) {
       imageUrl += `?t=${new Date().getTime()}`;
@@ -60,7 +59,7 @@ export async function generateMetadata({ params }) {
   }
 }
 
-// Default metadata fallback
+// Function to return default metadata if API fails
 function getDefaultMetadata(slug) {
   return {
     title: "Insights | Aarna Law",
@@ -82,6 +81,7 @@ function getDefaultMetadata(slug) {
   };
 }
 
-export default function RootLayout({ children }) {
+// Root Layout component for individual insights page
+export default function InsightPostLayout({ children }) {
   return <>{children}</>;
 }
