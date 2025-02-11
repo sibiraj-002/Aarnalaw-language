@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+
 import { ThemeModeScript } from "flowbite-react";
 import "./globals.css";
 import Header from "../components/Header/NavBar";
@@ -6,21 +6,7 @@ import Footer from "../components/Footer/Footer";
 import Script from "next/script";
 
 
-export const metadata: Metadata = {
-  title: "Expert Legal Representation | Aarna Law - Advocates & Consultants",
-  description:
-    "Discover award-winning legal services in Bangalore. Aarna Law offers full-service representation with expertise and dedication.",
-  alternates: {
-    canonical: "https://aarnalaw.com/",
-  },
-  openGraph: {
-    title: "Expert Legal Representation | Aarna Law - Advocates & Consultants",
-    description:
-      "Discover award-winning legal services in Bangalore. Aarna Law offers full-service representation with expertise and dedication.",
-    url: "https://aarnalaw.com/",
-    images: "/aarna-law.png",
-  },
-};
+
 
 export default function RootLayout({
   children,

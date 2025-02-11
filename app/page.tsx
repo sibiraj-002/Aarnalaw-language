@@ -8,6 +8,21 @@ import KindOfDispute from "../components/HomePage/KindOfDisputesWeDo";
 import OurCredentials from "../components/HomePage/OurCredentials";
 import OurNetwork from "../components/HomePage/OurNetwork";
 
+export const metadata = {
+  title: "Expert Legal Representation | Aarna Law - Advocates & Consultants",
+  description:
+    "Discover award-winning legal services in Bangalore. Aarna Law offers full-service representation with expertise and dedication.",
+  alternates: {
+    canonical: "https://aarnalaw.com/",
+  },
+  openGraph: {
+    title: "Expert Legal Representation | Aarna Law - Advocates & Consultants",
+    description:
+      "Discover award-winning legal services in Bangalore. Aarna Law offers full-service representation with expertise and dedication.",
+    url: "https://aarnalaw.com/",
+    images: "/aarna-law.png",
+  },
+};
 
 export default function Home() {
   return (
