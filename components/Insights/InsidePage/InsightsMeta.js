@@ -1,4 +1,4 @@
-impor
+
 export const InsightsMeta = {
     title: "Legal Insights and Expertise",
     description:

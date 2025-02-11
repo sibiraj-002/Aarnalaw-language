@@ -4,11 +4,7 @@ export default function Banner({ title, backgroundImage }) {
   return (
     <div
       className="relative h-[60vh] bg-cover bg-center"
-      style={{
-        backgroundImage: backgroundImage
-          ? `url(${backgroundImage})`
-          : `url('/PracticeArea/Aarna-Law-Banner-img.png')`,
-      }}
+      src={backgroundImage}
     >
       <div className="absolute bottom-0 mx-auto flex w-full items-center justify-center bg-[#091F48] p-2">
         <div className="mx-auto w-11/12">
