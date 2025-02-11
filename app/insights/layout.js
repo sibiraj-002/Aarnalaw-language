@@ -11,7 +11,7 @@ export const metadata = {
     description:
       "Stay informed with the latest legal insights and expert analyses across diverse practice areas. Explore Aarna Law's thought leadership and stay ahead in the legal landscape.",
     url: "/insights",
-    images: "/aarna-law.png",
+    images: "insights/InsightsBanner.jpg",
   },
 };
 
