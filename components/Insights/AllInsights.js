@@ -237,3 +237,5 @@ function AllInsights({ searchTerm }) {
 }
 
 export default AllInsights;
+
+
