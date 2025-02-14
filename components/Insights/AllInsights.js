@@ -163,20 +163,16 @@ function AllInsights({ searchTerm }) {
               key={item.id}
             >
               <Image
-                src={item._embedded?.["wp:featuredmedia"]?.[0]?.source_url}
-                alt={item.title.rendered}
-                className="h-[200px] w-full rounded-t-lg object-cover"
-                width={500}
-                height={300}
-                onLoadingComplete={() =>
-                  setData((prevData) => {
-                    const updatedData = prevData.map((p) =>
-                      p.id === item.id ? { ...p, isImageLoading: false } : p,
-                    );
-                    return updatedData;
-                  })
-                }
-              />
+                 src={
+                   item._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                   "/PracticeArea/Aarna-Law-Banner-img.png"
+                 }
+                 alt={item.title.rendered}
+                 className="h-[200px] w-full rounded-t-lg object-cover"
+                 width={500}
+                 height={300}
+                 />               
+
               <div className="p-5">
                 <h5
                   className="mb-2 line-clamp-2 min-h-10 text-lg font-bold tracking-tight text-gray-900"

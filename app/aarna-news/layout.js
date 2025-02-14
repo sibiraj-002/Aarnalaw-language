@@ -11,7 +11,7 @@ export const metadata = {
     description:
       "Keep up with the latest news and updates from Aarna Law. Discover firm announcements, key legal developments, and significant achievements in our practice.",
     url: "/aarna-news",
-    images: "/aarna-law.png",
+    images: "/insights/InsightsBanner.jpg",
   },
 };
 
