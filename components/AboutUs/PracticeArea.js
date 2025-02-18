@@ -68,7 +68,7 @@ export default function PracticeArea() {
           {data.map((item, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden bg-white p-4 text-black hover:text-white lg:p-1"
+              className="group relative overflow-hidden  p-4 text-white hover:text-white lg:p-1"
             >
               <Link href={`/practice-areas/${item.slug}`}>
                 <p
@@ -79,7 +79,7 @@ export default function PracticeArea() {
                 ></p>
               </Link>
               {/* Background animation */}
-              <div className="absolute inset-0 z-0 origin-left scale-x-0 transform bg-gradient-to-r from-custom-blue to-transparent transition-transform duration-300 group-hover:scale-x-100"></div>
+              <div className="absolute inset-0 z-0 origin-left scale-x-0 transform bg-gradient-to-r from-custom-red to-transparent transition-transform duration-300 group-hover:scale-x-100"></div>
             </div>
           ))}
         </div>
