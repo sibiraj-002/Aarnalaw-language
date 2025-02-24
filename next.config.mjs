@@ -670,6 +670,12 @@ const nextConfig = {
           "/aarna-news/aarna-law-welcomes-partner-apoorva-guruprasad",
         permanent: true,
       },
+      {
+        source: "/group-of-companies-doctrine-when-non-signatories-are-bound-by-arbitration-agreements",
+        destination:
+          "/insights/group-of-companies-doctrine-when-non-signatories-are-bound-by-arbitration-agreements",
+        permanent: true,
+      },
      
     ];
   },
