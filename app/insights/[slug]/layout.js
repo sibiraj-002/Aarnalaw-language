@@ -1,87 +1,46 @@
-// insights/[slug]/layout.js
 export async function generateMetadata({ params }) {
-  const apiUrl = `https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed=wp:featuredmedia&slug=${params.slug}`;
+  const { slug } = params; // Destructure params
 
-  try {
-    const response = await fetch(apiUrl);
+  const res = await fetch(
+    `https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed&slug=${slug}`
+  );
+  const data = await res.json();
 
-    if (!response.ok) {
-      console.error("Failed to fetch post data:", response.statusText);
-      return getDefaultMetadata(params.slug);
-    }
-
-    const postData = await response.json();
-    const post = postData[0]; // Get the first post
-
-    // Extract meta title and description
-    const metaTitle =
-      post?.acf?.meta_title?.trim() || post?.title?.rendered || "Insights | Aarna Law";
-    const metaDescription =
-      post?.acf?.meta_description?.trim() ||
-      post?.excerpt?.rendered?.replace(/<\/?[^>]+(>|$)/g, "") ||
-      "Insights | Aarna Law";
-
-    // Extract featured image
-    let imageUrl = post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "";
-    
-    // Add a timestamp to the image URL to prevent caching
-    if (imageUrl) {
-      imageUrl += `?t=${new Date().getTime()}`;
-    }
-
+  if (!data || data.length === 0) {
     return {
-      title: `${metaTitle} - Insights | Aarna Law`,
-      description: metaDescription,
-      metadataBase: new URL("https://www.aarnalaw.com/"),
-      openGraph: {
-        url: `https://www.aarnalaw.com/insights/${params.slug}`,
-        title: `${metaTitle} - Insights | Aarna Law`,
-        description: metaDescription,
-        images: [
-          {
-            url: imageUrl,
-            width: 1200,
-            height: 630,
-            alt: metaTitle,
-          },
-        ],
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: `${metaTitle} - Insights | Aarna Law`,
-        description: metaDescription,
-        images: [imageUrl],
-      },
+      title: "Blog Not Found | Aarna Law",
+      description: "The blog you are looking for is not available.",
     };
-  } catch (error) {
-    console.error("Error fetching post metadata:", error);
-    return getDefaultMetadata(params.slug);
   }
-}
 
-// Function to return default metadata if API fails
-function getDefaultMetadata(slug) {
+  const blog = data[0];
+
+  // Get featured image URL
+  const imageUrl = blog._embedded?.["wp:featuredmedia"]?.[0]?.source_url?.startsWith("http")
+    ? blog._embedded["wp:featuredmedia"][0].source_url
+    : `https://docs.aarnalaw.com${blog._embedded["wp:featuredmedia"][0].source_url}`;
+
   return {
-    title: "Insights | Aarna Law",
-    description: "Insights | Aarna Law",
-    metadataBase: new URL("https://www.aarnalaw.com/"),
+    title: blog.acf?.meta_title || blog.title.rendered,
+    description: blog.acf?.meta_description || "Read more about this topic.",
     openGraph: {
+      title: blog.acf?.meta_title || blog.title.rendered,
+      description: blog.acf?.meta_description || "Read more about this topic.",
       url: `https://www.aarnalaw.com/insights/${slug}`,
-      title: "Insights | Aarna Law",
-      description: "Insights | Aarna Law",
+      type: "article",
       images: [
         {
-          url: "https://www.aarnalaw.com/default-image.jpg",
+          url: imageUrl,
           width: 1200,
           height: 630,
-          alt: "Insights | Aarna Law",
+          alt: blog.title.rendered,
         },
       ],
     },
   };
 }
 
-// Root Layout component for individual insights page
+// ✅ Default export - A React component (needed for Next.js to work)
 export default function InsightPostLayout({ children }) {
   return <>{children}</>;
 }
