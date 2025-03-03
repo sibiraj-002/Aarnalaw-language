@@ -1,61 +1,46 @@
 export async function generateMetadata({ params }) {
-  try {
-    const response = await fetch(
-      `https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed=wp:featuredmedia&slug=${params.slug}`
-    );
+  const { slug } = params;
 
-    if (!response.ok) {
-      console.error("Failed to fetch post data:", response.statusText);
-      return getDefaultMetadata(params.slug);
-    }
+  const res = await fetch(
+    `https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed&slug=${slug}`
+  );
+  const data = await res.json();
 
-    const postData = await response.json();
-    const post = postData.length > 0 ? postData[0] : null;
-
-    if (!post) {
-      console.error("No post found.");
-      return getDefaultMetadata(params.slug);
-    }
-
-    // Get the featured image dynamically
-    const featuredImage =
-      post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "";
-
+  if (!data || data.length === 0) {
     return {
-      title: `${post.title.rendered} - Aarna News | Aarna Law`,
-      description: post?.excerpt?.rendered.replace(/<\/?[^>]+(>|$)/g, ""),
-      metadataBase: new URL("https://www.aarnalaw.com/"),
-      openGraph: {
-        url: `https://www.aarnalaw.com/aarna-news/${params.slug}`,
-        title: `${post.title.rendered} - Aarna News | Aarna Law`,
-        description: post?.excerpt?.rendered.replace(/<\/?[^>]+(>|$)/g, ""),
-        images: featuredImage
-          ? [{ url: featuredImage, width: 1200, height: 630, alt: post.title.rendered }]
-          : [],
-      },
+      title: "Blog Not Found | Aarna Law",
+      description: "The blog you are looking for is not available.",
     };
-  } catch (error) {
-    console.error("Error fetching metadata:", error);
-    return getDefaultMetadata(params.slug);
   }
-}
 
-// Function to return default metadata if data is missing
-function getDefaultMetadata(slug) {
+  const blog = data[0];
+
+  // Get the featured image URL safely
+  const imageUrl = blog._embedded?.["wp:featuredmedia"]?.[0]?.source_url?.startsWith("http")
+    ? blog._embedded["wp:featuredmedia"][0].source_url
+    : `https://docs.aarnalaw.com${blog._embedded["wp:featuredmedia"][0].source_url}`;
+
   return {
-    title: "Aarna News | Aarna Law",
-    description: "Aarna News | Aarna Law",
-    metadataBase: new URL("https://www.aarnalaw.com/"),
+    title: blog.acf?.meta_title || blog.title.rendered,
+    description: blog.acf?.meta_description || "Read more about this topic.",
     openGraph: {
-      url: `https://www.aarnalaw.com/aarna-news/${slug}`,
-      title: "Aarna News | Aarna Law",
-      description: "Aarna News | Aarna Law",
-      images: [{ url: "/aarna-law.png", width: 1200, height: 630, alt: "Aarna Law" }],
+      title: blog.acf?.meta_title || blog.title.rendered,
+      description: blog.acf?.meta_description || "Read more about this topic.",
+      url: `https://www.aarnalaw.com/insights/${slug}`,
+      type: "article",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: blog.title.rendered,
+        },
+      ],
     },
   };
 }
 
-// ✅ Ensure a React Component is exported
-export default function AarnaNewsPage({ children }) {
+// ✅ Default export - A React component (needed for Next.js to work)
+export default function InsightPostLayout({ children }) {
   return <>{children}</>;
 }
