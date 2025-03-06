@@ -88,6 +88,7 @@ export default function Partners() {
                   alt="team member"
                   width={200}
                   height={200}
+                   loading="lazy"
                 />
                 <h2 className="mb-2 text-center text-lg font-semibold text-blue-900">
                   {item.title.rendered}

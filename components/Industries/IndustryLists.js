@@ -80,6 +80,7 @@ function PracticeLists() {
                       height={400}
                       className="h-[200px] w-full transition-transform duration-500 ease-in-out group-hover:scale-110"
                       alt={items.title.rendered}
+                       loading="lazy"
                     />
                   </div>
                   <Link

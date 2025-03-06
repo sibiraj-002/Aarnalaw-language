@@ -39,8 +39,10 @@ export default function Banner() {
                 height={500}
                 loading="eager"
                 priority
+                
                 placeholder="blur"
                 blurDataURL={banner.mobileBannerUrl}
+                
               />
               {/* Desktop Banner */}
               <Image
@@ -66,21 +68,7 @@ export default function Banner() {
         )}
       </div>
 
-      {/* Optional Carousel Controls */}
-      {/* <div className="absolute top-1/2 left-0 right-0 flex justify-between px-4">
-        <button
-          className="bg-gray-700 text-white p-2 rounded-full"
-          onClick={() => setCurrentIndex((prevIndex) => (prevIndex - 1 + homeBanner.length) % homeBanner.length)}
-        >
-          &lt;
-        </button>
-        <button
-          className="bg-gray-700 text-white p-2 rounded-full"
-          onClick={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % homeBanner.length)}
-        >
-          &gt;
-        </button>
-      </div> */}
+
     </div>
   );
 }

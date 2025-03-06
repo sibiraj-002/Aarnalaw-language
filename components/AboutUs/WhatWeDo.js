@@ -12,6 +12,7 @@ const WhatWeDo = () => {
             height={500}
             className="w-full"
             alt="What We Do"
+             loading="lazy"
           />
         </div>
         <div className="flex flex-col items-start justify-center p-2 lg:pl-12">

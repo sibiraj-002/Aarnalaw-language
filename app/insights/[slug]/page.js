@@ -51,7 +51,7 @@ export default function Page({ params }) {
 
   const formatDateString = (dateString) => {
     const date = new Date(dateString);
-    const monthAbbreviations = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC", ];
+    const monthAbbreviations = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",];
     const day = date.getDate();
     const month = monthAbbreviations[date.getMonth()];
     const year = date.getFullYear();
@@ -89,7 +89,7 @@ export default function Page({ params }) {
       </style>
 
       <div className="mx-auto w-11/12">
-        <div className="h-[20vh]"></div>
+        <div className="h-[200px]"></div>
         <h1
           className="py-4 text-4xl font-bold tracking-wide text-black"
           dangerouslySetInnerHTML={{ __html: title }}

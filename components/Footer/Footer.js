@@ -37,7 +37,7 @@ export default function Footer() {
                 width={600}
                 height={600}
                 className="md:h-24 md:w-24 h-20 w-16"
-              
+               loading="lazy"
               />
           </Link>
             <div className="flex gap-8 py-4 ps-2">

@@ -82,6 +82,7 @@ function PostDetails({ details, partnersData, slug, titleText }) {
                 className="mb-4 size-[200px] rounded-full bg-[#0e1333]"
                 width={200}
                 height={200}
+                 loading="lazy"
               />
             )}
             {/* Name */}

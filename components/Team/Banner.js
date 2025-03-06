@@ -25,7 +25,7 @@ export default function Banner({ title, backgroundImage, mobileBackgroundImage, 
 
   return (
     <div
-      className="relative h-[80vh] bg-cover bg-center flex items-center justify-center"
+      className="relative h-[600px] bg-cover bg-center flex items-center justify-center"
       style={{ backgroundImage: `url(${isMobile ? mobileBackgroundImage : backgroundImage})` }}
     >
       {isLoading && (

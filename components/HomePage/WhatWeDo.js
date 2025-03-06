@@ -13,6 +13,7 @@ const WhatWeDo = () => {
             height={500}
             className="w-full"
             alt="Our Legacy"
+             loading="lazy"
           />
         </div>
         <div className="flex flex-col items-start justify-center lg:px-8">
@@ -76,6 +77,7 @@ const WhatWeDo = () => {
             height={500}
             className="w-full"
             alt="Our Legacy"
+             loading="lazy"
           />
         </div>
       </div>

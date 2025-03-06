@@ -74,6 +74,7 @@ const Podcasts = () => {
                 height={500}
                 className="h-[100px] w-[200px]"
                 alt={item.title}
+                 loading="lazy"
               />
               <h2 className="font-bold">{item.title}</h2>
               <p className="text-center text-sm">{item.desc}</p>

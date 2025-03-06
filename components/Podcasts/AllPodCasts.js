@@ -223,6 +223,7 @@ useEffect(() => {
                 className="w-full rounded-t-lg lg:h-[300px]"
                 width={500}
                 height={500}
+                 loading="lazy"
               />
             )}
           </div>

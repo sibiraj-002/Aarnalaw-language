@@ -32,6 +32,7 @@ export default function page() {
             height={200}
             className="w-[500px]"
             alt="404 Page"
+             loading="lazy"
           />
         </div>
       </div>

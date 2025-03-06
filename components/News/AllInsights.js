@@ -135,6 +135,7 @@ function AllNews({ searchTerm }) {
                   className="h-[200px] w-full md:h-[300px]"
                   width={500}
                   height={300}
+                   loading="lazy"
                 />
                 
                 ) : (
@@ -145,6 +146,7 @@ function AllNews({ searchTerm }) {
                       className="h-full w-full object-cover"
                       width={500}
                       height={300}
+                       loading="lazy"
                     />
                   </div>
                 )}

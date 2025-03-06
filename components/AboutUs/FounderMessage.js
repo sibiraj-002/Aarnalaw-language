@@ -12,6 +12,7 @@ function FounderMessage() {
             height={100}
             className="h-[30px] w-full lg:-mt-10"
             alt="MESSAGE FROM OUR FOUNDERS"
+             loading="lazy"
           />
         </div>
         <h1 className="pb-4 text-xl font-bold text-custom-blue lg:text-2xl">
@@ -25,6 +26,7 @@ function FounderMessage() {
           height={500}
           className="w-full"
           alt="MESSAGE FROM OUR FOUNDERS"
+           loading="lazy"
         />
       </div>
       <div className="flex flex-col items-start justify-center p-2 lg:pl-12">
@@ -35,6 +37,7 @@ function FounderMessage() {
             height={100}
             className="h-[30px] w-full lg:-mt-10"
             alt="MESSAGE FROM OUR FOUNDERS"
+             loading="lazy"
           />
         </div>
         <h1 className="hidden pb-4 text-xl font-bold text-custom-blue lg:block lg:text-2xl">

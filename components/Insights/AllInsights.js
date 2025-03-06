@@ -171,6 +171,7 @@ function AllInsights({ searchTerm }) {
                  className="h-[200px] w-full rounded-t-lg object-cover"
                  width={500}
                  height={300}
+                  loading="lazy"
                  />               
 
               <div className="p-5">

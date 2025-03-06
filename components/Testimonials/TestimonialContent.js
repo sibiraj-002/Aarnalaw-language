@@ -39,6 +39,7 @@ function Testimonials() {
                     height={90}
                     className="rounded-full object-cover"
                     alt={items.name}
+                     loading="lazy"
                   />
                 </div>
               </div>

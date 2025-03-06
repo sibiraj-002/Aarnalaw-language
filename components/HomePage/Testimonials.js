@@ -74,6 +74,7 @@ const Testimonials = () => {
             width={276}
             height={215}
             alt="testimonials"
+             loading="lazy"
           />
         </div>
         <div className="mt-2 flex justify-between md:-mt-36">
@@ -115,6 +116,7 @@ const Testimonials = () => {
                         height={90}
                         className="object-cover"
                         alt={item.name}
+                         loading="lazy"
                       />
                     </div>
                   </div>

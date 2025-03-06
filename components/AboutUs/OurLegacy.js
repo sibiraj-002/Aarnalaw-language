@@ -29,6 +29,7 @@ export default function OurLegacy() {
             height={500}
             className="w-full"
             alt="Our Legacy"
+             loading="lazy"
           />
         </div>
       </div>

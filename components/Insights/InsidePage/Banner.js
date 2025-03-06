@@ -12,6 +12,7 @@ export default function Banner({ title, backgroundImage }) {
         height={600}
         className="w-full"
         alt={title}
+        loading="lazy"
       />
     </div>
   );
