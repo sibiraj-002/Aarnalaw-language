@@ -53,7 +53,7 @@ function AllInsights({ searchTerm }) {
       const url = `https://docs.aarnalaw.com/wp-json/wp/v2/posts?_embed&per_page=100&categories=${cat1},${cat2}&after=${after}&before=${before}&status[]=publish&production_mode[]=${server}`;
       const response = await fetch(url);
       const result = await response.json();
-      console.log(result);
+      // console.log(result);
 
       if (Array.isArray(result)) {
         const sortedData = result.sort(

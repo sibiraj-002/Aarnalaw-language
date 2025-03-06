@@ -130,12 +130,13 @@ function AllNews({ searchTerm }) {
               <a href="#">
                 {items.featured_image_url ? (
                   <Image
-                    src={items.featured_image_url}
-                    alt={items.title.rendered}
-                    className="h-[200px] w-full rounded-t-lg object-cover md:h-[300px]"
-                    width={500}
-                    height={300}
-                  />
+                  src={items.featured_image_url}
+                  alt={items.title.rendered}
+                  className="h-[200px] w-full md:h-[300px]"
+                  width={500}
+                  height={300}
+                />
+                
                 ) : (
                   <div className="h-[300px] w-full rounded-t-lg bg-gray-200">
                     <Image

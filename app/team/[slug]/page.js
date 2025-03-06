@@ -28,7 +28,7 @@ export default function Page({ params }) {
         if (data && data.length > 0) {
           const post = data[0];
           // Set post details in state
-          console.log("filter data", post);
+          // console.log("filter data", post);
           setTitle(post.title.rendered);
           setBannerImage(post.acf.banner_image.url);
           setMobileBannerImage(post.acf.mobile_banner.url);

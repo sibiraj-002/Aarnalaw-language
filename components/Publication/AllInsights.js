@@ -102,7 +102,7 @@ function AllInsights({ searchTerm }) {
     .slice(0, page);
 
   const handleFormSubmit = (formData) => {
-    console.log("Item:", selectedItem); // Logs selected item
+    // console.log("Item:", selectedItem); // Logs selected item
     if (selectedItem && selectedItem.acf && selectedItem.acf.publication_url) {
       window.location.href = selectedItem.acf.publication_url;
     } else if (selectedItem && selectedItem.slug) {

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }) {
   const blog = data[0];
 
   // Log data for debugging purposes
-  console.log("Fetched Blog Data:", JSON.stringify(blog, null, 2));
+  // console.log("Fetched Blog Data:", JSON.stringify(blog, null, 2));
 
   // Get meta description from ACF field
   const metaDescription = blog.acf?.meta_description || "Read more about this topic.";
