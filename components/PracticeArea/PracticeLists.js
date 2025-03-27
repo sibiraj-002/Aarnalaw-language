@@ -60,38 +60,42 @@ function PracticeLists() {
           Our dynamic team provides experienced counsel on a diverse range of
           practice areas.
         </p>
+        <p className="py-5">
+          Over the years, Aarna law has earned a distinguished reputation as a trusted advisor. The long-standing relationships we have cultivated stand as a testament to our deep understanding of the legal landscape, our resourcefulness, and our ability to provide pragmatic, results-driven counsel.
+        </p>
+        <p>We offer a comprehensive range of legal services, each complementing the other, allowing us to adopt a holistic, cross-disciplinary perspective on every matter we undertake. Our core practice areas encompass corporate, commercial, and regulatory advisory, equity and debt financing, mergers and acquisitions, and dispute resolution.</p>
         <div className="grid gap-4 pt-12 lg:grid-cols-4">
           {loading
-            ? // Render skeletons while loading
-              [...Array(12)].map((_, index) => (
-                <div key={index} className="animate-pulse">
-                  <div className="h-[200px] w-full bg-gray-300"></div>
-                  <div className="h-[65px] bg-[#233876]"></div>
+            ? // Render skeletons while loading 
+            [...Array(12)].map((_, index) => (
+              <div key={index} className="animate-pulse">
+                <div className="h-[200px] w-full bg-gray-300"></div>
+                <div className="h-[65px] bg-[#233876]"></div>
+              </div>
+            ))
+            : // Render actual data once loaded 
+            data.map((items, index) => (
+              <div className="group" key={index}>
+                <div className="overflow-hidden">
+                  <Image
+                    src={items.acf.banner_image.url}
+                    width={400}
+                    height={400}
+                    className="h-[200px] w-full transition-transform duration-500 ease-in-out group-hover:scale-110"
+                    alt={items.title.rendered}
+                    loading="lazy"
+                  />
                 </div>
-              ))
-            : // Render actual data once loaded
-              data.map((items, index) => (
-                <div className="group" key={index}>
-                  <div className="overflow-hidden">
-                    <Image
-                      src={items.acf.banner_image.url}
-                      width={400}
-                      height={400}
-                      className="h-[200px] w-full transition-transform duration-500 ease-in-out group-hover:scale-110"
-                      alt={items.title.rendered}
-                       loading="lazy"
-                    />
-                  </div>
-                  <Link
-                    href={`/practice-areas/${items.slug}`}
-                    className="flex h-[65px] items-center justify-center bg-[#233876] p-1 text-center font-semibold text-white"
-                  >
-                    <p
-                      dangerouslySetInnerHTML={{ __html: items.title.rendered }}
-                    />
-                  </Link>
-                </div>
-              ))}
+                <Link
+                  href={`/practice-areas/${items.slug}`}
+                  className="flex h-[65px] items-center justify-center bg-[#233876] p-1 text-center font-semibold text-white"
+                >
+                  <p
+                    dangerouslySetInnerHTML={{ __html: items.title.rendered }}
+                  />
+                </Link>
+              </div>
+            ))}
         </div>
       </div>
     </div>

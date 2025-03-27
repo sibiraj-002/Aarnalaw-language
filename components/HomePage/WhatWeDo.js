@@ -13,7 +13,7 @@ const WhatWeDo = () => {
             height={500}
             className="w-full"
             alt="Our Legacy"
-             loading="lazy"
+            loading="lazy"
           />
         </div>
         <div className="flex flex-col items-start justify-center lg:px-8">
@@ -24,15 +24,13 @@ const WhatWeDo = () => {
             We are an award-winning dispute resolution practice with an international perspective.
           </h2>
           <p className="mt-4 text-custom-gray md:mt-0 ">
-            Our counsel-led, tech-enabled practice envisions justice as an
-            essential service in this global economy of international trade and
-            fluid borders.
+
+            Aarna Law was founded with a steadfast commitment to delivering quality-driven, value-based legal services, fostering deep and enduring relationships with those we serve. We dedicate time and effort to understanding our clients’ businesses and commercial objectives, enabling us to craft solutions that are both contextually relevant and strategically sound.
+
           </p>
           <p className="mt-4 py-8 text-custom-gray md:mt-0">
-            We counsel domestic, foreign, and diasporic clients on a range of
-            issues. From minimizing regulatory, financial, and legal risk to
-            navigating highly specialized areas of national and international
-            law, we advise with uncompromising integrity.
+            Our approach is innovative and business-conscious, underpinned by a team of seasoned lawyers who are commercially astute, hands-on, and solution-oriented.
+
           </p>
           <Link
             href="/practice-areas"
@@ -77,7 +75,7 @@ const WhatWeDo = () => {
             height={500}
             className="w-full"
             alt="Our Legacy"
-             loading="lazy"
+            loading="lazy"
           />
         </div>
       </div>
