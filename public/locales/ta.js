@@ -269,10 +269,10 @@ const ta = {
 
   //Industries Main Heading
   industriesHeading: {
-    industriesHeading: "Our progressive practice provides expert assistance to clients across industry.",
+    industriesHeading: "நமது முற்போக்கான நடைமுறை தொழில் துறை சார்ந்தவர்களுக்கு நிபுணத்துவ உதவிகளை வழங்குகிறது. ",
   },
   industrieslistTitle: {
-    industrieslist: "INDUSTRIES WE SERVE",
+    industrieslist: "நாம் செய்யும் தொழில்கள் ",
   },
   contactOurExpertsTitle: {
     contactOurExperts: "CONTACT OUR EXPERTS",
