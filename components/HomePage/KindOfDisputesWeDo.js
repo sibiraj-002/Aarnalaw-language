@@ -1,12 +1,14 @@
 "use client"
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css'; // Import styles for react-multi-carousel
+import { LanguageContext } from "../../app/context/LanguageContext";
 
 const KindOfDisputes = () => {
   const sliderRef = useRef(null);
+  const { language, translations } = useContext(LanguageContext);
 
-  // State to track screen size
+  // State to track screen size 
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
@@ -22,21 +24,6 @@ const KindOfDisputes = () => {
       window.removeEventListener('resize', handleResize); // Clean up the event listener
     };
   }, []);
-
-  // Disputes data
-  const disputes = [
-    { id: 1, title: 'Commercial Litigation' },
-    { id: 2, title: 'Arbitration' },
-    { id: 3, title: 'International Arbitration' },
-    { id: 4, title: 'Mediation' },
-    { id: 5, title: 'Construction Disputes' },
-    { id: 6, title: 'Real Estate Disputes' },
-    { id: 7, title: 'Share Holder Disputes' },
-    { id: 8, title: 'Trial & Advocacy' },
-    { id: 9, title: 'Corporate disputes' },
-    { id: 10, title: 'Restructuring & Insolvency' },
-    { id: 11, title: 'Regulatory disputes' },
-  ];
 
   // Carousel responsive settings
   const responsive = {
@@ -61,23 +48,23 @@ const KindOfDisputes = () => {
   return (
     <div className="py-8 px-4 md:mx-10">
       <h2 className="text-center text-2xl font-semibold text-custom-red mb-6">
-      Disputes We Resolve
+        {translations.disputes.disputesTitle}
       </h2>
-      <Carousel 
-        responsive={responsive} 
-        ref={sliderRef} 
-        infinite={true} 
-        showDots={false} 
+      <Carousel
+        responsive={responsive}
+        ref={sliderRef}
+        infinite={true}
+        showDots={false}
         arrows={false} // Disable arrows
         autoPlay={true} // Enable auto-slide
         autoPlaySpeed={3000} // Set the auto-slide interval (in milliseconds)
       >
-        {disputes.map((dispute) => (
+        {translations.disputesDetails.map((items, index) => (
           <div
-            key={dispute.id}
-            className="border border-red-400 py-10 text-center rounded-lg shadow-md m-5" // Set a fixed height here
+            key={index}
+            className="border border-red-400 py-10 text-center rounded-lg shadow-md m-5"
           >
-            <h3 className="text-blue-900 font-medium text-lg">{dispute.title}</h3>
+            <h3 className="text-blue-900 font-medium text-lg">{items.name}</h3>
           </div>
         ))}
       </Carousel>

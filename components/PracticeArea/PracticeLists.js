@@ -1,13 +1,16 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import configData from "../../config.json";
+import { LanguageContext } from "../../app/context/LanguageContext";
 
 function PracticeLists() {
-  const [data, setData] = useState([]); // Initialize data state with an empty array
-  const [loading, setLoading] = useState(true); // Loading state for skeleton
+  // Get selected language
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(100);
+  const { language, translations } = useContext(LanguageContext);
 
   const domain = typeof window !== "undefined" ? window.location.hostname : "";
 
@@ -23,11 +26,11 @@ function PracticeLists() {
         server = `${configData.STAG_PRODUCTION_SERVER_ID}`;
       }
 
-      const practiceAreaResponse = await fetch(
-        `${configData.SERVER_URL}practice-areas?_embed&status[]=publish&production_mode[]=${server}&per_page=${page}`,
+      const response = await fetch(
+        `${configData.SERVER_URL}practice-areas?_embed&status[]=publish&production_mode[]=${server}&per_page=${page}`
       );
 
-      const practiceAreaData = await practiceAreaResponse.json();
+      const practiceAreaData = await response.json();
 
       if (practiceAreaData.length === 0) {
         setHasMore(false);
@@ -36,7 +39,6 @@ function PracticeLists() {
           a.title.rendered.localeCompare(b.title.rendered)
         );
         setData(sortedData);
-        setHasMore(practiceAreaData.length === page); // Check if more pages are available
       }
 
       setLoading(false);
@@ -53,45 +55,56 @@ function PracticeLists() {
   return (
     <div>
       <div className="mx-auto w-11/12 py-12">
-        <p className="py-4 text-center font-bold text-gray-500">
-          PRACTICE AREAS
-        </p>
+        <p className="py-4 text-center font-bold text-gray-500">{translations.practiceAreasTitle.practiceAreas}</p>
         <p className="mx-auto text-center text-3xl lg:w-8/12">
-          Our dynamic team provides experienced counsel on a diverse range of
-          practice areas.
+          {translations.practiceAreaHeading.practiceAreaHeading}
         </p>
         <div className="grid gap-4 pt-12 lg:grid-cols-4">
           {loading
-            ? // Render skeletons while loading
-              [...Array(12)].map((_, index) => (
-                <div key={index} className="animate-pulse">
-                  <div className="h-[200px] w-full bg-gray-300"></div>
-                  <div className="h-[65px] bg-[#233876]"></div>
-                </div>
-              ))
-            : // Render actual data once loaded
-              data.map((items, index) => (
+            ? [...Array(12)].map((_, index) => (
+              <div key={index} className="animate-pulse">
+                <div className="h-[200px] w-full bg-gray-300"></div>
+                <div className="h-[65px] bg-[#233876]"></div>
+              </div>
+            ))
+            : data.map((item, index) => {
+              // Choose title & description based on language selection
+              const title =
+                language === "ta" && item.acf.tamil_title
+                  ? item.acf.tamil_title
+                  : language === "kn" && item.acf.kannada_title
+                    ? item.acf.kannada_title
+                    : item.title.rendered;
+
+              const description =
+                language === "ta" && item.acf.tamil_description
+                  ? item.acf.tamil_description
+                  : language === "kn" && item.acf.kannada_description
+                    ? item.acf.kannada_description
+                    : item.acf.description;
+
+
+              return (
                 <div className="group" key={index}>
                   <div className="overflow-hidden">
                     <Image
-                      src={items.acf.banner_image.url}
+                      src={item.acf.banner_image.url}
                       width={400}
                       height={400}
                       className="h-[200px] w-full transition-transform duration-500 ease-in-out group-hover:scale-110"
-                      alt={items.title.rendered}
-                       loading="lazy"
+                      alt={title}
+                      loading="lazy"
                     />
                   </div>
                   <Link
-                    href={`/practice-areas/${items.slug}`}
+                    href={`/practice-areas/${item.slug}`}
                     className="flex h-[65px] items-center justify-center bg-[#233876] p-1 text-center font-semibold text-white"
                   >
-                    <p
-                      dangerouslySetInnerHTML={{ __html: items.title.rendered }}
-                    />
+                    <p dangerouslySetInnerHTML={{ __html: title }} />
                   </Link>
                 </div>
-              ))}
+              );
+            })}
         </div>
       </div>
     </div>

@@ -33,7 +33,13 @@ const nextConfig = {
           "/contact-us",
         permanent: true,
       },
-
+      // Teams
+      {
+        source: "/apoorva-guruprasad",
+        destination:
+          "/team/apoorva-guruprasad",
+        permanent: true,
+      },
       // Insights
       {
         source: "/copyright-in-fashion-safeguarding-designers-creative-works",

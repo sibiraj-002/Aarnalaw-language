@@ -1,11 +1,12 @@
 // Import statements remain unchanged
 "use client";
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback, useContext } from "react";
 import Credentials from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Link from "next/link";
 import Image from "next/image";
 import configData from "../../config.json";
+import { LanguageContext } from "../../app/context/LanguageContext";
 
 export default function Partners() {
   const sliderRef = useRef(null);
@@ -14,6 +15,9 @@ export default function Partners() {
   const [page, setPage] = useState(100);
 
   const domain = typeof window !== "undefined" ? window.location.hostname : "";
+
+  const { translations } = useContext(LanguageContext);
+
 
   const fetchContent = useCallback(async () => {
     setLoading(true);
@@ -97,11 +101,13 @@ export default function Partners() {
     <div className="bg-bgDark3 py-12">
       <div className="text-center">
         <p className="mb-4 text-2xl font-bold tracking-wider text-custom-red">
-          PARTNERS
+          {/* PARTNERS */}  {translations.aboutPartner.aboutPartnerTitle}  
         </p>
         <p className="mx-auto mb-4 px-4 leading-normal text-white md:w-[1200px] md:text-center md:text-3xl">
-          The expertise of our accomplished team anchors our practice in thought
-          leadership, mentorship, and the pursuit of excellence...
+          {/* The expertise of our accomplished team anchors our practice in thought
+          leadership, mentorship, and the pursuit of excellence... */}
+
+          {translations.aboutPartner.aboutPartnerPara}
         </p>
         <div className="mx-auto w-11/12 gap-4">
           <Credentials
@@ -130,7 +136,7 @@ export default function Partners() {
                     alt="team member"
                     width={200}
                     height={200}
-                     loading="lazy"
+                    loading="lazy"
                   />
                   <h2 className="mb-2 min-h-[55px] text-center text-lg font-semibold text-blue-900">
                     {item.title.rendered}

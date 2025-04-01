@@ -19,14 +19,14 @@ function ModalTestimonial({ btnName, textColor, data, onClose }) {
           {data.name}
           <p className="text-lg text-gray-400">{data.post}</p>
           <p className="text-lg text-gray-400">{data.desingnation}</p>
-        </Modal.Header>{" "}
-        {/* Displaying the testimonial name */}
+        </Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
-            <p
-              className="text-base leading-relaxed text-gray-500 dark:text-gray-400"
-              dangerouslySetInnerHTML={{ __html: data.fullTestimonial }}
-            ></p>
+            {data.fullTestimonial.split('\n').map((line, index) => (
+              <p key={index} className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                {line}
+              </p>
+            ))}
           </div>
         </Modal.Body>
       </Modal>

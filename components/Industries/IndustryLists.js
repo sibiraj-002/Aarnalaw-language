@@ -1,17 +1,18 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import configData from "../../config.json";
+import { LanguageContext } from "../../app/context/LanguageContext";
 
-function PracticeLists() {
-  const [data, setData] = useState([]); // Initialize data state with an empty array
-  const [loading, setLoading] = useState(true); // Loading state for skeleton
+function IndustryLists() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(100);
+  const { language, translations } = useContext(LanguageContext); // Get selected language
 
   const domain = typeof window !== "undefined" ? window.location.hostname : "";
 
-  
   const fetchContent = useCallback(async () => {
     setLoading(true);
     try {
@@ -23,30 +24,29 @@ function PracticeLists() {
       } else {
         server = `${configData.STAG_PRODUCTION_SERVER_ID}`;
       }
-  
-      const practiceAreaResponse = await fetch(
+
+      const response = await fetch(
         `${configData.SERVER_URL}industries?_embed&status[]=publish&production_mode[]=${server}&per_page=${page}`
       );
-  
-      const practiceAreaData = await practiceAreaResponse.json();
-  
-      if (practiceAreaData.length === 0) {
+
+      const industryData = await response.json();
+
+      if (industryData.length === 0) {
         setHasMore(false);
       } else {
-        const sortedData = practiceAreaData.sort((a, b) =>
+        const sortedData = industryData.sort((a, b) =>
           a.title.rendered.localeCompare(b.title.rendered)
         );
         setData(sortedData);
-        setHasMore(practiceAreaData.length === page); // Check if more pages are available
       }
-  
+
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
       setLoading(false);
     }
   }, [page, domain]);
-  
+
   useEffect(() => {
     fetchContent();
   }, [page, fetchContent]);
@@ -55,48 +55,60 @@ function PracticeLists() {
     <div>
       <div className="mx-auto w-11/12 py-12">
         <p className="py-4 text-center font-bold text-gray-500">
-          INDUSTRIES WE SERVE
+          {translations.industrieslistTitle.industrieslist}
         </p>
         <p className="mx-auto text-center text-3xl lg:w-8/12">
-          Our progressive practice provides expert assistance to clients across
-          industry.
+          {translations.industriesHeading.industriesHeading}
         </p>
         <div className="grid gap-4 pt-12 lg:grid-cols-4">
           {loading
-            ? // Render skeletons while loading
-              [...Array(12)].map((_, index) => (
+            ? [...Array(12)].map((_, index) => (
                 <div key={index} className="animate-pulse">
                   <div className="h-[200px] w-full bg-gray-300"></div>
                   <div className="h-[65px] bg-[#233876]"></div>
                 </div>
               ))
-            : // Render actual data once loaded
-              data.map((items, index) => (
-                <div className="group" key={index}>
-                  <div className="overflow-hidden">
-                    <Image
-                      src={items.acf.banner_image.url}
-                      width={400}
-                      height={400}
-                      className="h-[200px] w-full transition-transform duration-500 ease-in-out group-hover:scale-110"
-                      alt={items.title.rendered}
-                       loading="lazy"
-                    />
+            : data.map((item, index) => {
+                // Choose title & description based on language selection
+                const title =
+                  language === "ta" && item.acf.tamil_title
+                    ? item.acf.tamil_title
+                    : language === "kn" && item.acf.kannada_title
+                    ? item.acf.kannada_title
+                    : item.title.rendered;
+
+                const description =
+                  language === "ta" && item.acf.tamil_description
+                    ? item.acf.tamil_description
+                    : language === "kn" && item.acf.kannada_description
+                    ? item.acf.kannada_description
+                    : item.acf.description;
+
+                return (
+                  <div className="group" key={index}>
+                    <div className="overflow-hidden">
+                      <Image
+                        src={item.acf.banner_image.url}
+                        width={400}
+                        height={400}
+                        className="h-[200px] w-full transition-transform duration-500 ease-in-out group-hover:scale-110"
+                        alt={title}
+                        loading="lazy"
+                      />
+                    </div>
+                    <Link
+                      href={`/industries/${item.slug}`}
+                      className="flex h-[65px] items-center justify-center bg-[#233876] p-1 text-center font-semibold text-white"
+                    >
+                      <p dangerouslySetInnerHTML={{ __html: title }} />
+                    </Link>
                   </div>
-                  <Link
-                    href={`/industries/${items.slug}`}
-                    className="flex h-[65px] items-center justify-center bg-[#233876] p-1 text-center font-semibold text-white"
-                  >
-                    <p
-                      dangerouslySetInnerHTML={{ __html: items.title.rendered }}
-                    />
-                  </Link>
-                </div>
-              ))}
+                );
+              })}
         </div>
       </div>
     </div>
   );
 }
 
-export default PracticeLists;
+export default IndustryLists;

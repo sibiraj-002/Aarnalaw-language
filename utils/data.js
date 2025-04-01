@@ -12,10 +12,10 @@ export const HeaderMenu = [
   {
     menu: "News & Insights",
     subMenu: [
-      { name: "Insights" },
-      { name: "Aarna News" },
-      { name: "Publications" },
-      { name: "Podcasts" },
+      { name: "Insights" , slug: "/insights"},
+      { name: "Aarna News" , slug: "/aarna-news"},
+      { name: "Publications" , slug: "/publications"},
+      { name: "Podcasts", slug: "/podcasts" },
     ],
   },
   { menu: "Careers", slug: "/careers" },

@@ -1,12 +1,14 @@
 "use client";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import Credentials from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { credentials } from "../../utils/data";
 import Image from "next/image";
+import { LanguageContext } from "../../app/context/LanguageContext";
 
 const Podcasts = () => {
+  const { language, translations } = useContext(LanguageContext);
   const sliderRef = useRef(null);
 
   // State to track screen size
@@ -49,7 +51,7 @@ const Podcasts = () => {
     <div className="bg-[#EFEFEF] py-12">
       <div className="mx-auto w-11/12 ">
         <h1 className="mb-10 text-center text-2xl font-semibold text-custom-red">
-        Awards & Accolades
+          {translations.awards.awardsTitle}
         </h1>
 
         <Credentials
@@ -74,7 +76,7 @@ const Podcasts = () => {
                 height={500}
                 className="h-[100px] w-[200px]"
                 alt={item.title}
-                 loading="lazy"
+                loading="lazy"
               />
               <h2 className="font-bold">{item.title}</h2>
               <p className="text-center text-sm">{item.desc}</p>

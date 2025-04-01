@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { LanguageContext } from "../../../app/context/LanguageContext"; // Import LanguageContext
 
-export default function Banner({
+export default function PracticeAreaBanner({
   backgroundImage,
   mobileBackgroundImage,
   titleText,
@@ -8,12 +9,13 @@ export default function Banner({
   const [bgImage, setBgImage] = useState(null); // For setting the correct image based on screen size
   const [isLoading, setIsLoading] = useState(true); // For loader
   const [timer, setTimer] = useState(3); // Countdown timer (in seconds)
+  const { language } = useContext(LanguageContext); // Get selected language
 
   useEffect(() => {
     // Set initial background image based on screen size
     const handleResize = () => {
       setBgImage(
-        window.innerWidth <= 768 ? mobileBackgroundImage : backgroundImage,
+        window.innerWidth <= 768 ? mobileBackgroundImage : backgroundImage
       );
     };
 
@@ -37,6 +39,15 @@ export default function Banner({
     };
   }, [backgroundImage, mobileBackgroundImage]);
 
+// Select title based on language
+const title =
+  language === "ta" && titleText?.acf?.tamil_title
+    ? titleText.acf.tamil_title
+    : language === "kn" && titleText?.acf?.kannada_title
+    ? titleText.acf.kannada_title
+    : titleText?.rendered; // Default to the English title
+
+
   return (
     <div className="relative lg:h-screen">
       {isLoading ? (
@@ -55,8 +66,8 @@ export default function Banner({
           <div className="absolute bottom-0 flex h-[500px] w-full items-center justify-center lg:h-screen">
             <h1
               className="rounded bg-black/50 lg:p-5 p-3 text-center text-4xl font-bold text-white lg:text-start lg:text-5xl"
-              dangerouslySetInnerHTML={{ __html: titleText }}
-            />  
+              dangerouslySetInnerHTML={{ __html: title }}
+            />
           </div>
         </div>
       )}
