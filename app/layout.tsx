@@ -18,9 +18,6 @@ export default function RootLayout({
         <ThemeModeScript />
         <meta name="msvalidate.01" content="A827D56A91561DA21E2E94273F4D52D5" />
       </head>
-
-
-
       <body>
         {/* ✅ Wrap the entire app with LanguageProvider */}
         <LanguageProvider> 
