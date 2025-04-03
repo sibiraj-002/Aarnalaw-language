@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useContext } from "react";
 import InsightSlider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -9,9 +9,14 @@ import { testimonials } from "../../utils/data";
 import { leftArrow, rightArrow } from "../../utils/icons";
 import Link from "next/link";
 import Image from "next/image";
+import { LanguageContext } from "../../app/context/LanguageContext";
 
 const Testimonials = () => {
   const sliderRef = useRef(null);
+
+  const [selectedTestimonial, setSelectedTestimonial] = useState(null);
+  const { language, translations } = useContext(LanguageContext);
+
 
   const NextArrow = () => (
     <div
@@ -92,37 +97,37 @@ const Testimonials = () => {
 
         <div className="absolute bottom-10 w-full gap-10 md:bottom-28 md:right-[200px] md:w-3/4">
           <InsightSlider ref={sliderRef} {...setting}>
-            {testimonials.map((item) => (
-              <div key={item.id} className="h-full">
+          {translations.testimonialDetails.map((items, index) =>(
+              <div key={index.id} className="h-full">
                 <div className="mx-2 mb-10 flex h-[250px] w-auto flex-col justify-center gap-1 bg-white p-5 shadow-lg md:w-[460px]">
                   <div className="flex items-center gap-4">
                     <div className="flex-1">
                       <div className="h-32">
                         <h3 className="text-xl font-semibold text-custom-blue md:text-2xl">
-                          {item.name}
+                          {items.name}
                         </h3>
                         <p className="text-sm text-custom-gray md:text-lg">
-                          {item.post}
+                          {items.post}
                         </p>
                         <p className="text-sm text-custom-gray md:text-lg">
-                          {item.desingnation}
+                          {items.desingnation}
                         </p>
                       </div>
                     </div>
                     <div className="mb-8">
                       <Image
-                        src={item.imageUrl}
+                        src={items.imageUrl}
                         width={90}
                         height={90}
                         className="object-cover"
-                        alt={item.name}
+                        alt={items.name}
                          loading="lazy"
                       />
                     </div>
                   </div>
                   <div className="flex-1">
                     <p className="line-clamp-2 text-sm leading-tight text-custom-gray">
-                      {item.desc}
+                      {items.desc}
                     </p>
                   </div>
                   <Link href="/testimonials" className="text-custom-blue">

@@ -6,7 +6,7 @@ import Image from "next/image";
 
 function Testimonials() {
   const [selectedTestimonial, setSelectedTestimonial] = useState(null);
-  const { language, translations } = useContext(LanguageContext);
+  const { language, translations } = useContext(LanguageContext); 
 
   const handleOpenModal = (testimonial) => {
     setSelectedTestimonial(testimonial);
