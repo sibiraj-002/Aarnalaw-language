@@ -60,11 +60,11 @@ function PracticeLists() {
           Our dynamic team provides experienced counsel on a diverse range of
           practice areas.
         </p>
-        <p className="py-5">
+        <p className="py-5 text-justify">
           Over the years, Aarna law has earned a distinguished reputation as a trusted advisor. The long-standing relationships we have cultivated stand as a testament to our deep understanding of the legal landscape, our resourcefulness, and our ability to provide pragmatic, results-driven counsel.
         </p>
-        <p>We offer a comprehensive range of legal services, each complementing the other, allowing us to adopt a holistic, cross-disciplinary perspective on every matter we undertake. Our core practice areas encompass corporate, commercial, and regulatory advisory, equity and debt financing, mergers and acquisitions, and dispute resolution.</p>
-        <div className="grid gap-4 pt-12 lg:grid-cols-4">
+        <p className=" text-justify">We offer a comprehensive range of legal services, each complementing the other, allowing us to adopt a holistic, cross-disciplinary perspective on every matter we undertake. Our core practice areas encompass corporate, commercial, and regulatory advisory, equity and debt financing, mergers and acquisitions, and dispute resolution.</p>
+        <div className="grid gap-4 pt-12 lg:grid-cols-4 ">
           {loading
             ? // Render skeletons while loading 
             [...Array(12)].map((_, index) => (
