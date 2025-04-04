@@ -56,6 +56,8 @@ function PostDetails({ details, partnersData, slug, title }) {
                 ? details.acf.tamil_description
                 : language === "kn" && details?.acf?.kannada_description
                   ? details.acf.kannada_description
+                : language === "te" && details?.acf?.telugu_description
+                  ? details.acf.telugu_description
                   : details?.acf?.description, // Default to English
           }}
           className="px-6 pt-8 lg:px-20 lg:pt-0"
@@ -125,6 +127,8 @@ function PostDetails({ details, partnersData, slug, title }) {
                   ? item.acf.tamil_title
                   : language === "kn" && item.acf.kannada_title
                     ? item.acf.kannada_title
+                  : language === "te" && item.acf.telugu_title
+                    ? item.acf.telugu_title
                     : item.title.rendered; // Default to English title
 
               return (

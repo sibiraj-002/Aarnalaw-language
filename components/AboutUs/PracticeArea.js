@@ -68,6 +68,8 @@ export default function PracticeArea() {
                   ? item.acf.tamil_title
                   : language === "kn" && item.acf.kannada_title
                     ? item.acf.kannada_title
+                    : language === "te" && item.acf.telugu_title
+                    ? item.acf.telugu_title
                     : item.title.rendered;
 
                 return (

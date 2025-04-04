@@ -33,7 +33,7 @@ function PracticeAreaPostDetails({ details, partnersData, slug, titleText }) {
         setLoading(false);
       }
     };
- 
+
     fetchData();
     initFlowbite();
   }, []);
@@ -62,7 +62,9 @@ function PracticeAreaPostDetails({ details, partnersData, slug, titleText }) {
                   ? details.acf.tamil_description
                   : language === "kn" && details?.acf?.kannada_description
                     ? details.acf.kannada_description
-                    : details?.acf?.description, // Default to English description
+                    : language === "te" && details?.acf?.telugu_description
+                      ? details.acf.telugu_description
+                      : details?.acf?.description,
             }}
             className="md:px-20"
           />
@@ -117,7 +119,9 @@ function PracticeAreaPostDetails({ details, partnersData, slug, titleText }) {
                     ? item.acf.tamil_title
                     : language === "kn" && item.acf.kannada_title
                       ? item.acf.kannada_title
-                      : item.title.rendered; // Default to English title
+                      : language === "te" && item.acf.telugu_title
+                        ? item.acf.telugu_title
+                        : item.title.rendered;
 
                 return (
                   <Link

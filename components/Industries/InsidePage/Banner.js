@@ -45,10 +45,12 @@ export default function IndustriesBanner({
       ? titleText.acf.tamil_title
       : language === "kn" && titleText?.acf?.kannada_title
       ? titleText.acf.kannada_title
+      : language === "te" && titleText?.acf?.telugu_title
+      ? titleText.acf.telugu_title
       : titleText?.rendered; // Default to the English title
 
   return (
-    <div className="relative lg:h-screen">
+    <div className="relative lg:h-screen"> 
       {isLoading ? (
         <div className="relative h-screen animate-pulse bg-gray-300">
           <div className="absolute bottom-0 flex h-screen w-full items-center justify-center">
