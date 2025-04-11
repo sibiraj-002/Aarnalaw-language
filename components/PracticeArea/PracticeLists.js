@@ -59,6 +59,12 @@ function PracticeLists() {
         <p className="mx-auto text-center text-3xl lg:w-8/12">
           {translations.practiceAreaHeading.practiceAreaHeading}
         </p>
+        <p className="py-5 text-justify">
+          {translations.practiceAreaPara1.practiceAreaPara1}
+        </p>
+        <p className=" text-justify">
+          {translations.practiceAreaPara2.practiceAreaPara2}
+        </p>
         <div className="grid gap-4 pt-12 lg:grid-cols-4">
           {loading
             ? [...Array(12)].map((_, index) => (

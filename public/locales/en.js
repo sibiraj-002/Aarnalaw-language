@@ -55,9 +55,9 @@ const en = {
     title: "What We Do",
     headline: "We are an award-winning team of lawyers with a global perspective.",
     para1:
-      "Our counsel-led, tech-enabled practice envisions justice as an essential service in this global economy of international trade and fluid borders.",
+      "Aarna Law was founded with a steadfast commitment to delivering quality-driven, value-based legal services, fostering deep and enduring relationships with those we serve. We dedicate time and effort to understanding our clients’ businesses and commercial objectives, enabling us to craft solutions that are both contextually relevant and strategically sound.",
     para2:
-      "We counsel domestic, foreign, and diasporic clients on a range of issues. From minimizing regulatory, financial, and legal risk to navigating highly specialized areas of national and international law, we advise with uncompromising integrity.",
+      "Our approach is innovative and business-conscious, underpinned by a team of seasoned lawyers who are commercially astute, hands-on, and solution-oriented.",
   },
 
   ourLegacy: {
@@ -271,6 +271,13 @@ const en = {
   //Practice Area Main Heading
   practiceAreaHeading: {
     practiceAreaHeading: "Our dynamic team provides experienced counsel on a diverse range of practice areas.",
+  },
+
+  practiceAreaPara1: {
+    practiceAreaPara1: " Over the years, Aarna law has earned a distinguished reputation as a trusted advisor. The long-standing relationships we have cultivated stand as a testament to our deep understanding of the legal landscape, our resourcefulness, and our ability to provide pragmatic, results-driven counsel.",
+  },
+  practiceAreaPara2: {
+    practiceAreaPara2: "We offer a comprehensive range of legal services, each complementing the other, allowing us to adopt a holistic, cross-disciplinary perspective on every matter we undertake. Our core practice areas encompass corporate, commercial, and regulatory advisory, equity and debt financing, mergers and acquisitions, and dispute resolution.",
   },
 
   //Industries Main Heading

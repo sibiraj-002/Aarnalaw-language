@@ -5,6 +5,7 @@ import HubSpotCareer from "@/utils/HubSpotForm/CareerForm";
 import InternShip from "@/utils/HubSpotForm/Internships";
 import Subscribe from "@/utils/HubSpotForm/Subscribe";
 import ContactPartner from "@/utils/HubSpotForm/ContactPartner";
+import { decodeHTML } from "@/utils/HubSpotForm/decodeHTML";
 
 function ModalContact({ btnName, textColor, modalTitle, btnType, id }) {
   const [openModal, setOpenModal] = useState(false);
@@ -32,7 +33,7 @@ function ModalContact({ btnName, textColor, modalTitle, btnType, id }) {
         {btnName}
       </button>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
-        <Modal.Header>{modalTitle}</Modal.Header>
+        <Modal.Header>{decodeHTML(modalTitle)}</Modal.Header>
         <Modal.Body>
           {/* <InternShip /> */}
           {SelectedComponent ? (
