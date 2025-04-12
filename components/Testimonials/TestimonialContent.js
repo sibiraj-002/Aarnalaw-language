@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
-import { testimonials } from "../../utils/data";
+import React, { useState, useContext } from "react";
+import { LanguageContext } from "../../app/context/LanguageContext";
 import ModalTestimonial from "@/components/ContactUs/Modal";
 import Image from "next/image";
 
 function Testimonials() {
   const [selectedTestimonial, setSelectedTestimonial] = useState(null);
+  const { language, translations } = useContext(LanguageContext); 
 
   const handleOpenModal = (testimonial) => {
     setSelectedTestimonial(testimonial);
@@ -15,7 +16,7 @@ function Testimonials() {
     <>
       <div className="mx-auto w-11/12 py-12">
         <div className="grid gap-10 lg:grid-cols-3">
-          {testimonials.map((items, index) => (
+          {translations.testimonialDetails.map((items, index) => (
             <div
               className="flex flex-col rounded-lg bg-white shadow-lg"
               key={index}
@@ -24,12 +25,11 @@ function Testimonials() {
               <div className="flex items-center p-6">
                 {/* Left Side: Text */}
                 <div className="flex-1">
-                <h2 className="flex md:h-12 text-lg font-bold">{items.name}</h2>
-              <p className="flex md:h-10 gap-2 py-2">{items.post}</p>
-              <p className="flex md:h-10 items-center gap-2 py-2">
-                {items.desingnation}
-              </p>
-
+                  <h2 className="flex md:h-12 text-lg font-bold">{items.name}</h2>
+                  <p className="flex md:h-10 gap-2 py-2">{items.post}</p>
+                  <p className="flex md:h-10 items-center gap-2 py-2">
+                    {items.desingnation}
+                  </p>
                 </div>
                 {/* Right Side: Image */}
                 <div className="ml-4">
@@ -39,7 +39,7 @@ function Testimonials() {
                     height={90}
                     className="rounded-full object-cover"
                     alt={items.name}
-                     loading="lazy"
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -54,7 +54,7 @@ function Testimonials() {
                     className="text-custom-red font-medium"
                     onClick={() => handleOpenModal(items)}
                   >
-                    Read more
+                    {translations.readMore || "Read more"}
                   </button>
                 </div>
               </div>

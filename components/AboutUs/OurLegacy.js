@@ -1,27 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
+import { LanguageContext } from "../../app/context/LanguageContext";
 
 export default function OurLegacy() {
+  const { translations } = useContext(LanguageContext);
   return (
     <>
       <div className="mx-auto  grid w-11/12 py-12 lg:grid-cols-2">
         <div className="order-2 flex flex-col items-start justify-center lg:order-1 lg:p-12">
           <h1 className="mt-4 text-2xl font-bold uppercase text-custom-blue lg:mt-0">
-            Our Legacy
+            {translations.ourLegacy.legacyTitle}
           </h1>
           <h2 className="mt-4 py-4 text-2xl font-semibold text-custom-red md:mt-0 lg:text-4xl">
-            Across varied domains, industries and international borders, our
-            legal services and solutions maintain the highest standards of
-            integrity and confidentiality.
+            {translations.ourLegacy.legacyHeadline}
           </h2>
 
           <p className="mt-4 py-2 text-custom-gray md:mt-0">
-            Above all, our award-winning practice is founded on the enduring
-            relationships we cultivate with every client. The legal and
-            commercial advice we provide reflects this conscious understanding
-            of our client&apos;s business interests.
+            {translations.ourLegacy.legacyPara}
           </p>
-        </div>
+        </div> 
         <div className="order-1 lg:order-2">
           <Image
             src="/aboutUs/OurLegacy.png"
@@ -29,7 +26,7 @@ export default function OurLegacy() {
             height={500}
             className="w-full"
             alt="Our Legacy"
-             loading="lazy"
+            loading="lazy"
           />
         </div>
       </div>

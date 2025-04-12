@@ -1,12 +1,9 @@
-
 import { ThemeModeScript } from "flowbite-react";
 import "./globals.css";
 import Header from "../components/Header/NavBar";
 import Footer from "../components/Footer/Footer";
 import Script from "next/script";
-
-
-
+import { LanguageProvider } from "../app/context/LanguageContext"; // ✅ Import LanguageProvider
 
 export default function RootLayout({
   children,
@@ -16,17 +13,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="robots" content="noindex, nofollow" />
         <link rel="icon" href="/favicon.png" sizes="any" />
         <ThemeModeScript />
         <meta name="msvalidate.01" content="A827D56A91561DA21E2E94273F4D52D5" />
       </head>
-
       <body>
-        <Header />
-        {children}
-        <Footer />
-        
-        
+        {/* ✅ Wrap the entire app with LanguageProvider */}
+        <LanguageProvider>
+          <Header />
+          {children}
+          <Footer />
+        </LanguageProvider>
+
         {/* Schema */}
         <Script
           id="website-schema"

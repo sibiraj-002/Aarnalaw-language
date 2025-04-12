@@ -1,13 +1,15 @@
 "use client";
-import React from "react";
+import React, { useContext } from 'react';
 import CountUp from "react-countup";
+import { LanguageContext } from "../../app/context/LanguageContext";
 
 export default function Trackrecords() {
+  const { language, translations } = useContext(LanguageContext);
   return (
     <div className="py-12">
       <div className="mx-auto w-11/12">
         <h1 className="text-center text-2xl font-semibold text-custom-red">
-          Our Track Record by Numbers
+          {translations.trackRecord.trackRecordTitle}
         </h1>
         <div className="grid gap-12 py-12 lg:grid-cols-3 lg:gap-0">
           <div className="text-center text-5xl text-custom-blue">

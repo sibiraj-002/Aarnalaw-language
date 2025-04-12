@@ -73,11 +73,11 @@ const LandingPage = ({ slug }) => {
     <div>
       <Banner
         backgroundImage={featureImage}
-        titleText={title}
         mobileBackgroundImage={mobileBanner}
+        titleText={{ rendered: title, acf: data?.acf }} // Ensure ACF fields are passed
       />
       <PostDetails
-        details={description}
+        details={data}
         partnersData={partnersData}
         slug={slug}
         title={title}

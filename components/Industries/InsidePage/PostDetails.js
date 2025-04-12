@@ -1,32 +1,29 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import ContactModal from "@/components/ModalContact/page";
 import { initFlowbite } from "flowbite";
+import { LanguageContext } from "../../../app/context/LanguageContext"; // Import LanguageContext
 
 function PostDetails({ details, partnersData, slug, title }) {
-  const [data, setData] = useState([]); // Initialize data state with an empty array
-  const [loading, setLoading] = useState(true); // Initialize data state with true
+  const { language, translations } = useContext(LanguageContext); // Get selected language
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://docs.aarnalaw.com/wp-json/wp/v2/industries?_embed&per_page=100`,
+          `https://docs.aarnalaw.com/wp-json/wp/v2/industries?_embed&per_page=100`
         );
         const result = await response.json();
 
-        // console.log("Indutries area data", result);
-
-        // Ensure the response is an array before setting the data
         if (Array.isArray(result)) {
           // Sort the data alphabetically by title
-          const sortedData = result.sort((a, b) => {
-            const titleA = a.title.rendered.toLowerCase(); // Convert to lowercase for case-insensitive comparison
-            const titleB = b.title.rendered.toLowerCase();
-            return titleA.localeCompare(titleB); // Compare titles
-          });
+          const sortedData = result.sort((a, b) =>
+            a.title.rendered.localeCompare(b.title.rendered)
+          );
           setData(sortedData);
         } else {
           console.error("Expected an array but got:", result);
@@ -34,12 +31,12 @@ function PostDetails({ details, partnersData, slug, title }) {
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        setLoading(false); // Set loading to false once data is fetched
+        setLoading(false);
       }
     };
 
     fetchData();
-    initFlowbite(); // Initialize Flowbite after the data is loaded
+    initFlowbite();
   }, []);
 
   // Check if there is any valid partner data
@@ -50,19 +47,25 @@ function PostDetails({ details, partnersData, slug, title }) {
 
   return (
     <div className="flex w-full flex-col lg:flex-row">
-      <div className="inner-content lg:w-9/12 lg:p-14 ">
-        {/* <h1
-          dangerouslySetInnerHTML={{ __html: title }}
-          className="px-20 pb-12 text-3xl font-semibold"
-        /> */}
+      <div className="inner-content lg:w-9/12 lg:p-14">
+        {/* Select description based on selected language */}
         <p
-          dangerouslySetInnerHTML={{ __html: details }}
+          dangerouslySetInnerHTML={{
+            __html:
+              language === "ta" && details?.acf?.tamil_description
+                ? details.acf.tamil_description
+                : language === "kn" && details?.acf?.kannada_description
+                  ? details.acf.kannada_description
+                : language === "te" && details?.acf?.telugu_description
+                  ? details.acf.telugu_description
+                  : details?.acf?.description, // Default to English
+          }}
           className="px-6 pt-8 lg:px-20 lg:pt-0"
         />
 
         <div className="flex w-full justify-center lg:justify-start lg:px-20">
           <ContactModal
-            btnName="CONTACT OUR EXPERTS"
+            btnName={translations.contactOurExpertsTitle.contactOurExperts}
             textColor="text-black"
             modalTitle={title}
             btnType="contactPartner"
@@ -70,6 +73,8 @@ function PostDetails({ details, partnersData, slug, title }) {
           />
         </div>
       </div>
+
+      {/* Sidebar */}
       <div className="bg-gray-50 lg:w-3/12">
         {partnersData?.partnerNames?.map((name, index) => (
           <div
@@ -83,14 +88,12 @@ function PostDetails({ details, partnersData, slug, title }) {
                 className="mb-4 size-[200px] rounded-full bg-[#0e1333]"
                 width={200}
                 height={200}
-                 loading="lazy"
+                loading="lazy"
               />
             )}
-            {/* Name */}
             {name && (
               <p className="text-lg font-bold text-custom-red">{name}</p>
             )}
-            {/* Designation */}
             {partnersData.partnerDesignations?.[index] && (
               <p className="text-sm font-semibold">
                 {partnersData.partnerDesignations[index]}
@@ -99,7 +102,7 @@ function PostDetails({ details, partnersData, slug, title }) {
           </div>
         ))}
 
-        {/* Only show 'CONTACT PARTNER' if there is valid partner data */}
+        {/* Show 'CONTACT PARTNER' only if there is partner data */}
         {hasValidPartnerData && (
           <div className="flex w-full justify-center">
             <ContactModal
@@ -112,23 +115,33 @@ function PostDetails({ details, partnersData, slug, title }) {
           </div>
         )}
 
+        {/* Quick Links */}
         <div className="w-full p-2 pt-10">
           <h2 className="font-bold">Quick Links</h2>
           <hr className="my-4 border-t-2 border-red-500" />
           <ul className="space-y-4 pr-10 text-left text-gray-500 dark:text-gray-400">
-            {data.map((items, index) => (
-              <Link
-                href={`/industries/${items.slug}`}
-                className={`flex border-b border-custom-red p-1 hover:text-custom-red ${
-                  items.slug === slug
-                    ? "font-semibold text-custom-red"
-                    : " text-black"
-                }`}
-                key={index}
-              >
-                <p dangerouslySetInnerHTML={{ __html: items.title.rendered }} />
-              </Link>
-            ))}
+            {data.map((item, index) => {
+              // Select title based on language
+              const title =
+                language === "ta" && item.acf.tamil_title
+                  ? item.acf.tamil_title
+                  : language === "kn" && item.acf.kannada_title
+                    ? item.acf.kannada_title
+                  : language === "te" && item.acf.telugu_title
+                    ? item.acf.telugu_title
+                    : item.title.rendered; // Default to English title
+
+              return (
+                <Link
+                  href={`/industries/${item.slug}`}
+                  className={`flex border-b border-custom-red p-1 hover:text-custom-red ${item.slug === slug ? "font-semibold text-custom-red" : "text-black"
+                    }`}
+                  key={index}
+                >
+                  <p dangerouslySetInnerHTML={{ __html: title }} />
+                </Link>
+              );
+            })}
           </ul>
         </div>
       </div>

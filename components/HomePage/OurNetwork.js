@@ -2,6 +2,16 @@ import React from "react";
 
 function OurNetwork() {
   return (
+    <>
+    <style>
+      {
+        `
+ .qqvbed-p83tee-V1ur5d {
+    text-transform: capitalize !important;
+}
+`
+      }
+    </style>
     <div className="mx-auto w-11/12">
       <h1 className="pb-8 pt-12 text-center text-xl font-semibold text-custom-blue md:text-2xl">
         A Network of Lawyers Around The World
@@ -18,6 +28,7 @@ function OurNetwork() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
