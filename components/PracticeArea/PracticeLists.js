@@ -65,14 +65,21 @@ function PracticeLists() {
         <p className=" text-justify">
           {translations.practiceAreaPara2.practiceAreaPara2}
         </p>
-        <div className="grid gap-4 pt-12 lg:grid-cols-4">
+        <p className="py-5 text-justify">
+          Over the years, Aarna law has earned a distinguished reputation as a trusted advisor. The long-standing relationships we have cultivated stand as a testament to our deep understanding of the legal landscape, our resourcefulness, and our ability to provide pragmatic, results-driven counsel.
+        </p>
+        <p className=" text-justify">We offer a comprehensive range of legal services, each complementing the other, allowing us to adopt a holistic, cross-disciplinary perspective on every matter we undertake. Our core practice areas encompass corporate, commercial, and regulatory advisory, equity and debt financing, mergers and acquisitions, and dispute resolution.</p>
+        <div className="grid gap-4 pt-12 lg:grid-cols-4 ">
           {loading
+
             ? [...Array(12)].map((_, index) => (
+
               <div key={index} className="animate-pulse">
                 <div className="h-[200px] w-full bg-gray-300"></div>
                 <div className="h-[65px] bg-[#233876]"></div>
               </div>
             ))
+
             : data.map((item, index) => {
               // Choose title & description based on language selection
               const title =
@@ -115,6 +122,7 @@ function PracticeLists() {
                 </div>
               );
             })}
+            
         </div>
       </div>
     </div>

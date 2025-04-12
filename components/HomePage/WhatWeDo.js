@@ -29,6 +29,7 @@ const WhatWeDo = () => {
             {translations.whatWeDo.headline}
           </h2>
           <p className="mt-4 text-custom-gray md:mt-0 ">
+
             {translations.whatWeDo.para1}
           </p>
           <p className="mt-4 py-8 text-custom-gray md:mt-0">
