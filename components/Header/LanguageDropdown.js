@@ -11,7 +11,7 @@ const LanguageDropdown = () => {
     { code: "en", label: "English" },
     { code: "kn", label: "ಕನ್ನಡ (Kannada)" },
     { code: "ta", label: "தமிழ் (Tamil)" },
-    // { code: "te", label: "తెలుగు (Telugu)" }, 
+    { code: "te", label: "తెలుగు (Telugu)" }, 
     // { code: "ml", label: "മലയാളം (Malayalam)" },
     // { code: "hi", label: "हिंदी (Hindi)" },
 
